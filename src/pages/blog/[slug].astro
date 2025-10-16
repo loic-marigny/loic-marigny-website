@@ -1,0 +1,44 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+/**
+ * Strong typing for entries in the "blog" content collection.
+ */
+type BlogEntry = CollectionEntry<"blog">;
+
+/**
+ * Generate one static page per blog post.
+ * We exclude drafts so they don't produce routes (avoids RSS -> 404 mismatches).
+ */
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+/**
+ * Receive the post provided by getStaticPaths and render its Markdown content.
+ */
+const { post } = Astro.props as { post: BlogEntry };
+const { Content } = await post.render(); // provides a <Content /> component to render the MD
+const { data } = post;
+---
+
+<Layout title={`${data.title} — Loïc Marigny`} description={data.description ?? ""}>
+  <article>
+    <header>
+      <h1>{data.title}</h1>
+      {data.pubDate && (
+        <p><small>{data.pubDate.toLocaleDateString("fr-FR")}</small></p>
+      )}
+      {data.description && <p>{data.description}</p>}
+    </header>
+
+    <!-- Render the Markdown body -->
+    <Content />
+  </article>
+</Layout>

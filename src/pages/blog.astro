@@ -1,55 +1,29 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+type BlogEntry = CollectionEntry<"blog">;
 
 /**
- * Strongly-typed shape for Markdown modules imported via import.meta.glob.
+ * Load all posts from the "blog" collection.
+ * Filter out drafts and sort by date (newest first).
  */
-type PostModule = {
-  frontmatter: {
-    title: string;
-    description?: string;
-    pubDate: string | Date;   // allow string in frontmatter, we cast to Date below
-    draft?: boolean;
-  };
-  url: string;                // Astro injects a .url for content modules when eager
-};
-
-/**
- * Import all Markdown files in /content/blog as eager modules WITH types.
- * The generic <PostModule> tells TS what `m` looks like, so it's not `unknown`.
- */
-const modules = import.meta.glob<PostModule>("../content/blog/*.md", { eager: true });
-
-/**
- * Normalize and sort posts:
- * - cast pubDate to Date
- * - drop drafts
- * - sort by most recent using getTime() (returns number) to please TS
- */
-const posts = Object.values(modules)
-  .map((m) => ({
-    url: m.url,
-    title: m.frontmatter.title,
-    description: m.frontmatter.description ?? "",
-    draft: m.frontmatter.draft ?? false,
-    pubDate: new Date(m.frontmatter.pubDate),
-  }))
-  .filter((p) => !p.draft)
-  .sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+const posts: BlogEntry[] = (await getCollection("blog", (entry: BlogEntry) => !entry.data.draft))
+   .sort((a: BlogEntry, b: BlogEntry) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
 <Layout title="Blog — Loïc Marigny" description="Articles and notes.">
   <h1>Blog</h1>
 
   {posts.length === 0 ? (
-    <p>No post yet. Create one in <code>src/content/blog/</code>.</p>
+    <p>No posts yet. Create one in <code>src/content/blog/</code>.</p>
   ) : (
     <ul>
-      {posts.map((post) => (
+      {posts.map((post: BlogEntry) => (
         <li>
-          <a href={post.url}>{post.title}</a>
-          <small> — {post.pubDate.toLocaleDateString("fr-FR")}</small>
-          {post.description && <div>{post.description}</div>}
+          <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+          <small> — {post.data.pubDate.toLocaleDateString("fr-FR")}</small>
+          {post.data.description && <div>{post.data.description}</div>}
         </li>
       ))}
     </ul>
