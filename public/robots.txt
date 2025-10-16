@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://loic-marigny.com/sitemap-index.xml
+Feed: https://ton-domaine.fr/rss.xml

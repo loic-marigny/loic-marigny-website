@@ -1,8 +1,57 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+/**
+ * Strongly-typed shape for Markdown modules imported via import.meta.glob.
+ */
+type PostModule = {
+  frontmatter: {
+    title: string;
+    description?: string;
+    pubDate: string | Date;   // allow string in frontmatter, we cast to Date below
+    draft?: boolean;
+  };
+  url: string;                // Astro injects a .url for content modules when eager
+};
+
+/**
+ * Import all Markdown files in /content/blog as eager modules WITH types.
+ * The generic <PostModule> tells TS what `m` looks like, so it's not `unknown`.
+ */
+const modules = import.meta.glob<PostModule>("../content/blog/*.md", { eager: true });
+
+/**
+ * Normalize and sort posts:
+ * - cast pubDate to Date
+ * - drop drafts
+ * - sort by most recent using getTime() (returns number) to please TS
+ */
+const posts = Object.values(modules)
+  .map((m) => ({
+    url: m.url,
+    title: m.frontmatter.title,
+    description: m.frontmatter.description ?? "",
+    draft: m.frontmatter.draft ?? false,
+    pubDate: new Date(m.frontmatter.pubDate),
+  }))
+  .filter((p) => !p.draft)
+  .sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 ---
 
 <Layout title="Blog — Loïc Marigny" description="Articles and notes.">
   <h1>Blog</h1>
-  <!-- list your posts -->
+
+  {posts.length === 0 ? (
+    <p>No post yet. Create one in <code>src/content/blog/</code>.</p>
+  ) : (
+    <ul>
+      {posts.map((post) => (
+        <li>
+          <a href={post.url}>{post.title}</a>
+          <small> — {post.pubDate.toLocaleDateString("fr-FR")}</small>
+          {post.description && <div>{post.description}</div>}
+        </li>
+      ))}
+    </ul>
+  )}
 </Layout>
