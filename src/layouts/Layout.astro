@@ -1,22 +1,36 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+---
+const { title = "Mon site", description = "Portfolio & blog", lang = "fr" } = Astro.props;
+const siteTitle = title;
+---
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{siteTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" />
+    <!-- Open Graph de base -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/og-default.jpg" />
+  </head>
+  <body>
+    <header style="padding:1rem">
+      <nav style="display:flex; gap:1rem">
+        <a href="/">Accueil</a>
+        <a href="/cv">CV</a>
+        <a href="/blog">Blog</a>
+        <a href="/projets">Projets</a>
+        <a href="/culture">Culture</a>
+      </nav>
+    </header>
+    <main style="max-width:800px; margin:0 auto; padding:1rem">
+      <slot />
+    </main>
+    <footer style="padding:2rem; text-align:center; opacity:.7">
+      © {new Date().getFullYear()} • Ton Nom
+    </footer>
+  </body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
