@@ -58,14 +58,25 @@ a:hover {
   z-index: 10;
 }
 
+/* ==== Header layout ==== */
+.nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+}
+
 .nav {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1.25rem;
   padding: 0.75rem 1rem;
-  max-width: 1100px;
   margin: 0 auto;
+  flex: 1;
 }
 
 .nav a {
@@ -83,6 +94,22 @@ a:hover {
 .nav a[aria-current="page"] {
   background: rgba(255, 255, 255, 0.14);
 }
+
+/* Logo positioned to the left*/
+.brand-logo {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.brand-logo img {
+  height: 84px;          /* adjust as needed */
+  width: auto;
+  display: block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
 
 /* ===============================
    Layout

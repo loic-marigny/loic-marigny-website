@@ -35,7 +35,9 @@ const isActive = (href: string) =>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#243553" />
-    <link rel="icon" href="/favicon.ico" />
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="/logos/leaf.png" />
+	<link rel="apple-touch-icon" href="/logos/leaf.png" />
 
     <!-- Google Fonts: Bricolage Grotesque -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,15 +55,26 @@ const isActive = (href: string) =>
   </head>
 
   <body>
-    <header class="site-header">
-      <nav class="nav" aria-label="Main navigation">
-        {nav.map((link) => (
-          <a href={link.href} aria-current={isActive(link.href) ? "page" : undefined}>
-            {link.label}
-          </a>
-        ))}
-      </nav>
-    </header>
+    <!-- ===============================
+     Header with centered nav + left logo
+	=================================-->
+	<header class="site-header">
+	<div class="nav-wrapper">
+		<!-- Logo aligned to the left -->
+		<a href="/" class="brand-logo" aria-label="Home">
+		<img src="/logos/loic-marigny-logo-long.png" alt="Loïc Marigny logo" />
+		</a>
+
+		<!-- Centered navigation -->
+		<nav class="nav" aria-label="Main navigation">
+		{nav.map((link) => (
+			<a href={link.href} aria-current={isActive(link.href) ? "page" : undefined}>
+			{link.label}
+			</a>
+		))}
+		</nav>
+	</div>
+	</header>
 
     <main>
       <slot />
