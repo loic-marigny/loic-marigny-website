@@ -1,27 +1,38 @@
 ---
-/*
-  Layout.astro
-  -------------
-  Minimal layout that:
-  - imports global styles
-  - defines a centered navigation bar
-  - exposes <slot /> for page content
-*/
-
 import "../styles/global.css";
 
-const { title = "My website", description = "Portfolio & blog", lang = "fr" } = Astro.props;
+type NavChild = {
+  href: string;
+  label: string;
+};
 
-// Navigation links
-const nav = [
+type NavItem = NavChild & {
+  children?: NavChild[];
+};
+
+const {
+  title = "My website",
+  description = "Portfolio & blog",
+  lang = "fr",
+} = Astro.props;
+
+const nav: NavItem[] = [
   { href: "/", label: "Home" },
-  { href: "/experience", label: "Experience" },
+  {
+    href: "/experience",
+    label: "Experience",
+    children: [
+      { href: "/experience/cv", label: "CV" },
+      { href: "/experience/work", label: "Work" },
+      { href: "/experience/association", label: "Association" },
+      { href: "/experience/education", label: "Education" },
+    ],
+  },
   { href: "/blog", label: "Blog" },
   { href: "/projects", label: "Projects" },
   { href: "/interesting", label: "Interesting" },
 ];
 
-// Active link detection
 const currentPath = Astro.url.pathname;
 const isActive = (href: string) =>
   currentPath === href || (href !== "/" && currentPath.startsWith(href + "/"));
@@ -35,15 +46,20 @@ const isActive = (href: string) =>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#243553" />
-	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="/logos/leaf.png" />
-	<link rel="apple-touch-icon" href="/logos/leaf.png" />
-	<!-- RSS feed -->
-	<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="Blog — Loïc Marigny" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/logos/leaf.png" />
+    <link rel="apple-touch-icon" href="/logos/leaf.png" />
+    <!-- RSS feed -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      href="/rss.xml"
+      title="Blog &mdash; Lo&#239;c Marigny"
+    />
 
     <!-- Google Fonts: Bricolage Grotesque -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300..800&display=swap"
       rel="stylesheet"
@@ -57,90 +73,119 @@ const isActive = (href: string) =>
   </head>
 
   <body>
-    <!-- ===============================
-     Header with centered nav + left logo
-	=================================-->
-	<header class="site-header">
-	<div class="nav-wrapper">
-		<!-- Logo aligned to the left -->
-		<a href="/" class="brand-logo" aria-label="Home">
-		<img src="/logos/loic-marigny-logo-long.png" alt="Loïc Marigny logo" />
-		</a>
+    <header class="site-header">
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo" aria-label="Home">
+          <img src="/logos/loic-marigny-logo-long.png" alt="Lo&#239;c Marigny logo" />
+        </a>
 
-		<!-- Centered navigation -->
-		<nav class="nav" aria-label="Main navigation">
-      <ul class="nav-list">
-        <li class="nav-item"><a href="/" aria-current={isActive("/") ? "page" : undefined}>Home</a></li>
+        <nav class="nav" aria-label="Main navigation">
+          <ul class="nav-list">
+            {
+              nav.map((item) => (
+                <li
+                  class:list={[
+                    "nav-item",
+                    { "nav-item--has-submenu": !!item.children },
+                  ]}
+                >
+                  <a
+                    class="nav-link"
+                    href={item.href}
+                    aria-current={isActive(item.href) ? "page" : undefined}
+                    aria-haspopup={item.children ? "true" : undefined}
+                  >
+                    {item.label}
+                  </a>
 
-        <!-- Dropdown: Experiences -->
-        <li class="nav-item has-submenu manual">
-          <!-- Top-level link is clickable -->
-          <a
-            href="/experience"
-            class="nav-link"
-            aria-current={isActive("/experience") ? "page" : undefined}
-          >
-            Experiences
-          </a>
-
-          <!-- Submenu shows on hover/focus-within -->
-          <ul class="submenu" role="menu" aria-label="Experiences submenu">
-            <li><a role="menuitem" href="/experience/cv">CV</a></li>
-            <li><a role="menuitem" href="/experience/work">Work</a></li>
-            <li><a role="menuitem" href="/experience/association">Association</a></li>
-            <li><a role="menuitem" href="/experience/education">Education</a></li>
+                  {item.children && (
+                    <div class="submenu-panel">
+                      <ul class="submenu" aria-label={`${item.label} submenu`}>
+                        {item.children.map((child) => (
+                          <li class="submenu-item">
+                            <a
+                              class="submenu-link"
+                              href={child.href}
+                              aria-current={isActive(child.href) ? "page" : undefined}
+                            >
+                              {child.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </li>
+              ))
+            }
           </ul>
-        </li>
-
-        <li class="nav-item"><a href="/blog" aria-current={isActive("/blog") ? "page" : undefined}>Blog</a></li>
-        <li class="nav-item"><a href="/projets" aria-current={isActive("/projets") ? "page" : undefined}>Projects</a></li>
-        <li class="nav-item"><a href="/culture" aria-current={isActive("/culture") ? "page" : undefined}>Culture</a></li>
-      </ul>
-    </nav>
-
-	</div>
-	</header>
+        </nav>
+      </div>
+    </header>
 
     <main>
       <slot />
     </main>
 
-    <!-- ===============================
-         Footer: 3-column responsive layout
-    =================================-->
     <footer>
       <div class="footer-grid">
-        <!-- Left: copyright -->
         <div class="footer-left">
-          © {new Date().getFullYear()} • Loïc Marigny
+          &copy; {new Date().getFullYear()} &middot; Lo&#239;c Marigny
         </div>
 
-        <!-- Center: secondary links -->
         <div class="footer-center" aria-label="Footer navigation">
           <a class="footer-link" href="/about">About</a>
           <a class="footer-link" href="/contact">Contact</a>
-          <!-- tu peux en ajouter d'autres ici -->
         </div>
 
-        <!-- Right: social icons -->
         <nav class="footer-right socials" aria-label="Social links">
-          <a href="https://instagram.com/loic_marigny" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <a
+            href="https://instagram.com/loic_marigny"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
             <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="Instagram" loading="lazy" />
           </a>
-          <a href="https://x.com/LoicMarigny" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <a
+            href="https://x.com/LoicMarigny"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="X (Twitter)"
+          >
             <img src="https://cdn.simpleicons.org/x/FFFFFF" alt="X (Twitter)" loading="lazy" />
           </a>
-          <a href="https://www.linkedin.com/in/loic-marigny" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <a
+            href="https://www.linkedin.com/in/loic-marigny"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
             <img src="/icons/linkedin-logo.svg" alt="LinkedIn" loading="lazy" />
             <span class="visually-hidden">LinkedIn</span>
           </a>
-          <a href="https://github.com/loic-marigny" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <a
+            href="https://github.com/loic-marigny"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
             <img src="https://cdn.simpleicons.org/github/FFFFFF" alt="GitHub" loading="lazy" />
           </a>
-          <a href="https://www.goodreads.com/user/show/178085152" target="_blank" rel="noopener noreferrer" aria-label="Goodreads">
+          <a
+            href="https://www.goodreads.com/user/show/178085152"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Goodreads"
+          >
             <img src="https://cdn.simpleicons.org/goodreads/FFFFFF" alt="Goodreads" loading="lazy" />
           </a>
-          <a href="https://boxd.it/8s2yN" target="_blank" rel="noopener noreferrer" aria-label="Letterboxd">
+          <a
+            href="https://boxd.it/8s2yN"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Letterboxd"
+          >
             <img src="https://cdn.simpleicons.org/letterboxd/FFFFFF" alt="Letterboxd" loading="lazy" />
           </a>
         </nav>
