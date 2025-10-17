@@ -64,9 +64,9 @@ a:hover {
   align-items: center;
   justify-content: center;
   position: relative;
-  max-width: 1100px;
+  max-width: 1250px;
   margin: 0 auto;
-  padding: 1.25rem 1rem;
+  padding: 1.25rem 0rem;
 }
 
 .nav {
@@ -95,10 +95,141 @@ a:hover {
   background: rgba(255, 255, 255, 0.14);
 }
 
+/* ===== Nav structure (list-based) ===== */
+.nav { display: flex; justify-content: center; align-items: center; }
+.nav-list { display: flex; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
+.nav-item a, .nav-summary { 
+  color: var(--sand); padding: .4rem .7rem; border-radius: .5rem;
+  text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: .4rem;
+  transition: background .15s ease, color .15s ease;
+}
+.nav-item a:hover, .nav-summary:hover { color: var(--white); background: rgba(255,255,255,.08); }
+.nav-item a[aria-current="page"] { background: rgba(255,255,255,.14); }
+
+/* ===== Dropdown (details/summary) ===== */
+.has-submenu details { position: relative; }
+.nav-summary { outline: none; list-style: none; }
+.has-submenu details > summary { list-style: none; }       /* remove default triangle */
+.has-submenu details > summary::-webkit-details-marker { display: none; }
+
+
+/* Submenu panel */
+.submenu {
+  position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--brand); color: var(--sand);
+  border-radius: .65rem; padding: .5rem; margin: 0;
+  list-style: none; min-width: 200px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2), 0 2px 6px rgba(0,0,0,.12);
+  border: 1px solid rgba(255,255,255,.08);
+  display: none;         /* hidden by default */
+  z-index: 20;
+}
+
+/* Show submenu when open or focus-within (keyboard) */
+.has-submenu details[open] .submenu,
+.has-submenu details:focus-within .submenu { display: block; }
+
+.submenu li { margin: 0; }
+.submenu a {
+  display: block; padding: .5rem .65rem; border-radius: .4rem;
+  color: var(--sand); text-decoration: none; white-space: nowrap;
+}
+.submenu a:hover { background: rgba(255,255,255,.10); color: var(--white); }
+
+/* Rotate caret when open */
+.has-submenu details[open] .caret { transform: translateY(1px) rotate(180deg); opacity: 1; }
+
+/* Keep panel aligned on small screens */
+@media (max-width: 640px) {
+  .submenu { left: auto; right: 0; transform: none; }
+}
+
+/* Invisible hover buffer between the link and its dropdown */
+.nav-item.has-submenu.manual {
+  position: relative;
+}
+
+/* Create a transparent "bridge" area to keep hover active */
+.nav-item.has-submenu.manual::after {
+  content: "";
+  position: absolute;
+  top: 100%;        /* just below the main link */
+  left: 0;
+  width: 100%;
+  height: 12px;     /* invisible zone bridging the gap */
+  background: transparent;
+}
+
+/* Top-level link with caret */
+.nav-item.has-submenu.manual > .nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  color: var(--sand);
+  padding: .4rem .7rem;
+  border-radius: .5rem;
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease;
+}
+.nav-item.has-submenu.manual > .nav-link:hover {
+  color: var(--white);
+  background: rgba(255,255,255,.08);
+}
+.nav-item.has-submenu.manual > .nav-link[aria-current="page"] {
+  background: rgba(255,255,255,.14);
+}
+
+/* Show submenu on hover or keyboard focus within the LI */
+.nav-item.has-submenu.manual { position: relative; }
+.nav-item.has-submenu.manual:hover .submenu,
+.nav-item.has-submenu.manual:focus-within .submenu {
+  display: block;
+}
+
+/* Position the dropdown panel (reuse your existing submenu look) */
+.nav-item.has-submenu.manual .submenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--brand);
+  color: var(--sand);
+  border-radius: .65rem;
+  padding: .5rem;
+  margin: 0;
+  list-style: none;
+  min-width: 200px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2), 0 2px 6px rgba(0,0,0,.12);
+  border: 1px solid rgba(255,255,255,.08);
+  display: none; /* hidden by default */
+  z-index: 20;
+}
+.nav-item.has-submenu.manual .submenu a {
+  display: block;
+  padding: .5rem .65rem;
+  border-radius: .4rem;
+  color: var(--sand);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-item.has-submenu.manual .submenu a:hover {
+  background: rgba(255,255,255,.10);
+  color: var(--white);
+}
+
+
+/* Keep panel aligned on small screens */
+@media (max-width: 640px) {
+  .nav-item.has-submenu.manual .submenu {
+    left: auto; right: 0; transform: none;
+  }
+}
+
+
 /* Logo positioned to the left*/
 .brand-logo {
   position: absolute;
-  left: 1rem;
+  left: 0rem;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -151,11 +282,12 @@ footer {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr 1fr 1fr; /* left - center - right */
   align-items: center;
   gap: 1rem;
-  max-width: 1100px;
+  max-width: 90%;
   margin: 0 auto;
+  padding: 0 0.5rem;
 }
 
 .footer-left {
@@ -166,13 +298,13 @@ footer {
 
 .footer-center {
   justify-self: center;
+  text-align: center;
 }
 
 .footer-right {
   justify-self: end;
   display: flex;
   gap: 0.75rem;
-  font-size: 0.95rem;
 }
 
 .footer-inner {
@@ -211,6 +343,14 @@ footer {
   opacity: 1;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* Separator dot between footer center links */
+.footer-center a + a::before {
+  content: " • ";
+  color: var(--sand);
+  opacity: 0.7;
+  margin: 0 0.4rem;
 }
 
 
