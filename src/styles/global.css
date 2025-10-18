@@ -158,12 +158,13 @@ a:hover {
 
 .submenu-panel {
   position: absolute;
-  left: 0;
+  --submenu-offset-x: 0.45rem;
+  left: calc(-1 * var(--submenu-offset-x));
   transform: translateY(-6px);
   top: calc(100% - 2px);
   min-width: calc(100% + 1rem);
   max-width: 12rem;
-  padding: 0.5rem 0.55rem 0.6rem 0.1rem;
+  padding: 0.5rem 0.55rem 0.6rem calc(0.1rem + var(--submenu-offset-x));
   border-radius: 0 0 0.85rem 0.85rem;
   background: var(--brand);
   --submenu-border-offset: 2.12rem; /* distance before the decorative border starts */
@@ -238,6 +239,7 @@ a:hover {
 
 @media (max-width: 640px) {
   .submenu-panel {
+    --submenu-offset-x: 0;
     left: auto;
     right: 0;
     transform: translateY(-6px);
