@@ -137,14 +137,26 @@ a:hover {
   padding: 0.5rem 0.6rem 0.6rem;
   border-radius: 0 0 0.85rem 0.85rem;
   background: var(--brand);
-  border: 2px solid var(--nav-border);
-  border-top: 0;
+  --submenu-border-offset: 2.12rem; /* distance before the decorative border starts */
   box-shadow: none;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.18s ease, transform 0.18s ease;
   z-index: 12;
+}
+
+.submenu-panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--submenu-border-offset);
+  bottom: 0;
+  border: 2px solid var(--nav-border);
+  border-top: 0;
+  border-radius: 0 0 0.85rem 0.85rem;
+  pointer-events: none;
 }
 
 .nav-item--has-submenu:hover .submenu-panel,
