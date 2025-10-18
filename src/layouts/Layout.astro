@@ -36,6 +36,8 @@ const nav: NavItem[] = [
 const currentPath = Astro.url.pathname;
 const isActive = (href: string) =>
   currentPath === href || (href !== "/" && currentPath.startsWith(href + "/"));
+
+const isExact = (href: string) => currentPath === href;
 ---
 
 <!DOCTYPE html>
@@ -92,7 +94,15 @@ const isActive = (href: string) =>
                   <a
                     class="nav-link"
                     href={item.href}
-                    aria-current={isActive(item.href) ? "page" : undefined}
+                    aria-current={
+                      item.children
+                        ? isExact(item.href)
+                          ? "page"
+                          : undefined
+                        : isActive(item.href)
+                        ? "page"
+                        : undefined
+                    }
                     aria-haspopup={item.children ? "true" : undefined}
                   >
                     {item.label}

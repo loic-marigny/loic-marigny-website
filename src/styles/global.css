@@ -99,19 +99,38 @@ a:hover {
   padding: 0.4rem 0.75rem;
   border-radius: 0.5rem;
   text-decoration: none;
-  transition: background 0.18s ease, color 0.18s ease;
+  transition: color 0.18s ease;
   position: relative;
-  z-index: 2;
+  z-index: 30;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  transition: background 0.18s ease;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .nav-link:hover,
 .nav-link:focus-visible {
   color: var(--white);
-  background: rgba(255, 255, 255, 0.12);
   text-decoration: none;
 }
 
+.nav-link:hover::before,
+.nav-link:focus-visible::before {
+  background: rgba(255, 255, 255, 0.12);
+}
+
 .nav-link[aria-current="page"] {
+  color: var(--white);
+}
+
+.nav-link[aria-current="page"]::before {
   background: rgba(255, 255, 255, 0.18);
 }
 
@@ -122,9 +141,19 @@ a:hover {
 
 .nav-item--has-submenu:hover > .nav-link,
 .nav-item--has-submenu:focus-within > .nav-link {
-  background: rgba(255, 255, 255, 0.16);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  box-shadow: none;
+}
+
+.nav-item--has-submenu:hover > .nav-link::before,
+.nav-item--has-submenu:focus-within > .nav-link::before {
+  background: transparent;
+}
+
+.nav-item--has-submenu > .nav-link:hover::before,
+.nav-item--has-submenu > .nav-link:focus-visible::before {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .submenu-panel {
@@ -134,7 +163,7 @@ a:hover {
   top: calc(100% - 2px);
   min-width: calc(100% + 1rem);
   max-width: 12rem;
-  padding: 0.5rem 0.6rem 0.6rem;
+  padding: 0.5rem 0.55rem 0.6rem 0.1rem;
   border-radius: 0 0 0.85rem 0.85rem;
   background: var(--brand);
   --submenu-border-offset: 2.12rem; /* distance before the decorative border starts */
@@ -223,6 +252,7 @@ a:hover {
 
 @media (prefers-reduced-motion: reduce) {
   .nav-link,
+  .nav-link::before,
   .submenu-panel,
   .submenu-link {
     transition: none;
