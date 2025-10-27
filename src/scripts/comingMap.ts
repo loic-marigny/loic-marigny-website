@@ -4,62 +4,103 @@ interface ComingMapOptions {
   countryColors: ColorDictionary;
   stateColors: ColorDictionary;
   defaultFillColor: string;
+  countryCategories?: Record<string, string>;
+  stateCategories?: Record<string, string>;
+  defaultCategoryId?: string;
 }
 
 declare const maplibregl: any;
 
 const FILTER_ALL = "__all__";
+const HIDDEN_COLOR = "#ffffff";
 
 function readOptionsFromDataset(): ComingMapOptions | null {
   const mapElement = document.getElementById("map");
   if (!mapElement) return null;
 
-  const { countryColors, stateColors, defaultFillColor } = mapElement.dataset;
+  const {
+    countryColors,
+    stateColors,
+    defaultFillColor,
+    countryCategories,
+    stateCategories,
+    defaultCategoryId
+  } = mapElement.dataset as Record<string, string | undefined>;
+
   if (!countryColors || !stateColors || !defaultFillColor) return null;
 
   try {
     return {
       countryColors: JSON.parse(countryColors),
       stateColors: JSON.parse(stateColors),
-      defaultFillColor
+      defaultFillColor,
+      countryCategories: countryCategories ? JSON.parse(countryCategories) : undefined,
+      stateCategories: stateCategories ? JSON.parse(stateCategories) : undefined,
+      defaultCategoryId
     };
   } catch (error) {
-    console.warn("[comingMap] Impossible de parser les couleurs depuis les data-attributes.", error);
+    console.warn(
+      "[comingMap] Impossible de parser les données depuis les attributs data-*.",
+      error
+    );
     return null;
   }
 }
 
 export default function initComingMap(passedOptions?: ComingMapOptions) {
   if (typeof window === "undefined") return;
+
   const options = passedOptions ?? readOptionsFromDataset();
   if (!options) return;
 
-  const { countryColors, stateColors, defaultFillColor } = options;
+  const {
+    countryColors,
+    stateColors,
+    defaultFillColor,
+    countryCategories = {},
+    stateCategories = {},
+    defaultCategoryId = ""
+  } = options;
 
-  let attempts = 0;
-  const MAX_ATTEMPTS = 20;
+  const getCountryCategory = (iso: string) =>
+    countryCategories[iso] ?? defaultCategoryId;
+  const getStateCategory = (code: string) =>
+    stateCategories[code] ?? defaultCategoryId;
 
-  const buildColorExpressionForCountries = (filterColor: string) => {
+  const buildColorExpressionForCountries = (filterCategory: string) => {
     const expr: (string | any[])[] = ["match", ["get", "iso_a3"]];
     for (const iso of Object.keys(countryColors)) {
       const color = countryColors[iso];
+      const categoryId = getCountryCategory(iso);
       expr.push(iso);
-      expr.push(filterColor === FILTER_ALL || color === filterColor ? color : "#ffffff");
+      expr.push(
+        filterCategory === FILTER_ALL || filterCategory === categoryId
+          ? color
+          : HIDDEN_COLOR
+      );
     }
     expr.push(defaultFillColor);
     return expr;
   };
 
-  const buildColorExpressionForStates = (filterColor: string) => {
+  const buildColorExpressionForStates = (filterCategory: string) => {
     const expr: (string | any[])[] = ["match", ["get", "stusps"]];
     for (const code of Object.keys(stateColors)) {
       const color = stateColors[code];
+      const categoryId = getStateCategory(code);
       expr.push(code);
-      expr.push(filterColor === FILTER_ALL || color === filterColor ? color : "#ffffff");
+      expr.push(
+        filterCategory === FILTER_ALL || filterCategory === categoryId
+          ? color
+          : HIDDEN_COLOR
+      );
     }
     expr.push(defaultFillColor);
     return expr;
   };
+
+  let attempts = 0;
+  const MAX_ATTEMPTS = 20;
 
   const setupMap = () => {
     if (typeof maplibregl === "undefined") {
@@ -169,7 +210,9 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
     });
     map.on("mouseleave", "states-fill", hidePopup);
 
-    const select = document.getElementById("colorFilter") as HTMLSelectElement | null;
+    const select = document.getElementById(
+      "colorFilter"
+    ) as HTMLSelectElement | null;
     if (select) {
       select.addEventListener("change", () => {
         const value = select.value;
