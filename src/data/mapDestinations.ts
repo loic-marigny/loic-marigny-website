@@ -1,4 +1,4 @@
-type MapCategory = {
+﻿type MapCategory = {
   id: string;
   label: string;
   color: string;
@@ -221,7 +221,88 @@ export const countryCategories = {
 } as const;
 
 export const countryExplanations = {
-  SEN: "Pays à fort potentiel de développement, culture extrêmement riche, climat chaud, cuisine exceptionnelle"
+  SEN: "Pays à fort potentiel de développement, culture extrêmement riche, climat chaud, cuisine exceptionnelle",
+  UZB: "Climat très continental, histoire fascinante, architecture grandiose, coût de la vie très bas, richesses naturelles importantes",
+  SGP: "Ville-État moderne et dynamique, mélange unique de cultures, propreté exemplaire, hub du continent asiatique",
+  THA: "Culture riche et diversifiée, modes de vie variés, cuisine exceptionnelle, cadre de vie unique",
+  VNM: "Pays en plein essor, paysages variés, culture millénaire, cuisine renommée",
+  CIV: "Diversité culturelle, faune abondante, population accueillante, climat tropical",
+  AGO: "Pays en reconstruction à fort potentiel, richesses naturelles, diversité ethnique, culture vibrante",
+
+  BWA: "Stabilité politique, modèle de démocratie, faune exceptionnelle, ressources naturelles abondantes",
+  LBN: "Richesse culturelle et historique, diversité religieuse, cuisine renommée, population accueillante malgré les problèmes sécuritaires",
+  TWN: "Environnement dynamique, innovation technologique, culture riche",
+  MAR: "Pays en développement, culture riche, liens historiques forts avec la France",
+  ETH: "Culture ancienne, pays en plein essor malgré des problèmes sécuritaires",
+  KEN: "Pays en développement avec une faune exceptionnelle, paysages variés, population accueillante",
+  NGA: "Pays à fort potentiel économique, diversité culturelle, cuisine riche",
+  IDN: "Archipel immense avec une biodiversité exceptionnelle, culture variée, population accueillante",
+  PHL: "Pays insulaire avec des paysages magnifiques, culture riche, population chaleureuse",
+  MYS: "Pays en développement avec une économie dynamique, diversité culturelle, cuisine variée. Acteur majeur du monde de demain",
+  OMN: "Stabilité politique, accès au monde arabe dans un pays plus respectueux des droits humains que ses voisins, économie en croissance",
+  MUS: "Stabilité politique, cadre de vie exceptionnel",
+  ZAF: "Pays en développement, partie du BRICS",
+  MDG: "Fort potentiel économique avec l'explosion de la zone Asie-Pacifique, ressources naturelles importantes",
+  COD: "Pays en reconstruction avec un fort potentiel économique, richesses naturelles abondantes, liens avec la France",
+
+
+
+  CHN: "Nouveau centre du monde, pays en pleine transformation, richesse culturelle millénaire",
+  TUR: "Pays au carrefour de l'Europe et de l'Asie, riche histoire, culture vibrante, fort potentiel économique",
+  ESP: "Climat agréable, culture riche, qualité de vie élevée, économie en dynamique, politique sociale en réussite",
+  ITA: "Patrimoine historique et culturel exceptionnel, comparable à la France",
+  GBR: "Patrimoine historique et culturel exceptionnel, comparable à la France, influence internationale majeure",
+  GRC: "Histoire ancienne fascinante, paysages magnifiques, climat agréable",
+  AUS: "Pays moderne avec une excellente qualité de vie, paysages variés, culture occidentale mais unique",
+  NZL: "Pays isolé mais bonne économie et qualité de vie élevée",
+  SAU: "Pays en développement rapide avec de fortes ambitions, histoire riche, bonnes relations internationales",
+  SVK: "Pays en développement avec une économie dynamique, bonne qualité de vie, liens familiaux",
+  CZE: "Pays en développement avec une économie dynamique, bonne qualité de vie, liens familiaux",
+
+
+  JPN: "Cadre de vie dynamique, culture unique mais pays au bord de la crise démographique",
+  KOR: "Cadre de vie dynamique, culture unique mais pays au bord de la crise démographique",
+
+  HUN: "Histoire riche et fascinante mais pays en dérive autoritaire inquiétante. Droits humains inquiétés.",
+  QAT: "Pays riche en développement rapide mais régime autoritaire répressif. Droits humains bafoués, ingérences à l'international.",
+  BEL: "Intérêt d'une expérience professionnelle limité par rapport à la France.",
+  LVA: "Déjà vécu en Lettonie, valeur ajoutée limitée comparée à ses voisins.",
+  LTU: "Valeur ajoutée limitée comparée à ses voisins.",
+  BLR: "Risque de dérive autoritaire, situation économique fragile, ingérences russes.",
+
+  
+  112: "Zone disputée entre l'Inde et la Chine, tensions militaires fréquentes, accès restreint",
+  118: "Zone à haut risque en raison du génocide en cours. Gouvernement d'idéologie islamiste, soumis aux ingérences du Qatar et de l'Iran.",
+  129: "Territoire à haut risque en raison de la colonisation illégale permise par le gouvernement israélien.",
+  113: "Zone disputée entre l'Inde et la Chine, tensions militaires fréquentes, accès restreint",
+  114: "Zone disputée entre l'Inde et la Chine, tensions militaires fréquentes, accès restreint",
+  121: "Zone disputée entre l'Inde et le Pakistan, tensions militaires fréquentes, conditions de vie difficiles",
+  UKR: "Conflit armé majeur, instabilité politique, crise humanitaire, tensions internationales élevées",
+  SDN: "Conflits armés persistants, instabilité politique, risques sécuritaires élevés, droits humains bafoués",
+  SSD: "Guerre civile dévastatrice, crise humanitaire majeure, instabilité politique chronique",
+  HTI: "Crise humanitaire catastrophique, instabilité politique grave, pauvreté extrême",
+  AZE: "Conflit territorial non résolu, tensions régionales élevées, gouvernance autoritaire",
+  ARM: "Tensions régionales persistantes, instabilité politique occasionnelle, économie fragile",
+  MOZ: "Conflits armés intermittents, instabilité politique, pauvreté généralisée",
+  LBY: "Instabilité politique chronique, conflits armés persistants, risques sécuritaires élevés",
+  BFA: "Insécurité croissante due aux groupes armés, instabilité politique, pauvreté généralisée",
+  ARG: "Crise sociale et humanitaire grave, instabilité politique et économique",
+  ESH: "Conflit territorial non résolu, tensions régionales élevées, situation humanitaire précaire",
+
+  PAK: "Tensions géopolitiques élevées, instabilité politique, risques sécuritaires importants",
+  MMR: "Conflits ethniques persistants, instabilité politique, crise humanitaire majeure",
+  IRQ: "Instabilité politique chronique, menaces terroristes, tensions sectaires élevées",
+  AFG: "Conflits armés persistants, instabilité politique, risques sécuritaires élevés, droits humains bafoués",
+  PRK: "Régime autoritaire strict, isolement international, restrictions sévères sur les libertés individuelles",
+  ISR: "Etat colonial commettant actuellement un génocide",
+  IRN: "Régime théocratique oppressif, tensions géopolitiques importantes, violations des droits humains",
+  TKM: "Dictature extrême, restrictions sévères sur les libertés individuelles, isolé internationalement",
+  IRK: "Conflits armés persistants, instabilité politique, risques sécuritaires élevés, droits humains bafoués",
+  SYR: "Guerre civile dévastatrice, crise humanitaire majeure, instabilité politique chronique",
+  YEM: "Crise humanitaire catastrophique, conflits armés persistants, instabilité politique grave",
+  SOM: "Instabilité politique chronique, conflits armés persistants, risques sécuritaires extrêmes",
+  RUS: "Régime autoritaire répressif, violations des droits humains, comportement international agressif",
+  RWA: "Responsabilité dans le génocide en RDC, régime autoritaire répressif",
 } as const;
 
 export const usaOverrideColor = "#ffffff00";
@@ -290,5 +371,7 @@ export const stateCategories = {
 } as const;
 
 export const stateExplanations = {
-  NY: "NYC uniquement"
+  NY: "NYC uniquement. Ville dynamique, culturelle et cosmopolite, mais nation décadente en voie de fascisation.",
+  DC: "Ville dynamique et environnement professionnel riche, mais nation décadente en voie de fascisation.",
+  CA: "Région extrêmement dynamique, avec une culture florissante, mais nation décadente en voie de fascisation.",
 } as const;
