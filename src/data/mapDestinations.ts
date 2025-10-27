@@ -7,12 +7,12 @@ type MapCategory = {
 
 export const mapCategories: MapCategory[] = [
   { id: "priority", label: "Prioritaire", color: "#8B5CF6" },
-  { id: "strong-interest", label: "IntÃ©rÃªt fort", color: "#075737ff" },
-  { id: "interesting", label: "IntÃ©rÃªt", color: "#0ca953ff" },
-  { id: "curiosity", label: "CuriositÃ©", color: "#9ac90dff" },
+  { id: "strong-interest", label: "Intérêt fort", color: "#075737ff" },
+  { id: "interesting", label: "Intérêt", color: "#0ca953ff" },
+  { id: "curiosity", label: "Curiosité", color: "#9ac90dff" },
   {
     id: "work-conditional",
-    label: "En fonction du travail proposÃ©",
+    label: "En fonction du travail proposé",
     color: "#ef4444"
   },
   { id: "situation-unstable", label: "Situation instable", color: "#532504ff" },
@@ -33,6 +33,7 @@ export const DEFAULT_FILL_COLOR =
 
 export const countryCategories = {
   FRA: "france", // France
+
   THA: "priority", // Thaïlande
   VNM: "priority", // Vietnam
   SEN: "priority", // Sénégal
@@ -40,8 +41,10 @@ export const countryCategories = {
   AGO: "priority", // Angola
   UZB: "priority", // Ouzbékistan
   SGP: "priority", // Singapour
-  "118": "situation-unstable", // Gaza Strip
-  "129": "situation-unstable", // Cisjordanie (West Bank)
+
+  AFG: "no", // Afghanistan
+  IRN: "no", // Iran
+  PRK: "no", // Corée du Nord
   ISR: "no", // Israël
   PAK: "no", // Pakistan
   MMR: "no", // Birmanie (Myanmar)
@@ -52,6 +55,14 @@ export const countryCategories = {
   RUS: "no", // Russie
   RWA: "no", // Rwanda
   TKM: "no", // Turkménistan
+
+  "112": "situation-unstable", // Aksai Chin
+  "113": "situation-unstable", // CH-IN
+  "114": "situation-unstable", // Demchok
+  "118": "situation-unstable", // Gaza Strip
+  "119": "situation-unstable", // Kalapani
+  "121": "situation-unstable", // Siachen-Saltoro
+  "129": "situation-unstable", // Cisjordanie (West Bank)
   PSE: "situation-unstable", // Palestine
   UKR: "situation-unstable", // Ukraine
   NER: "situation-unstable", // Niger
@@ -64,6 +75,8 @@ export const countryCategories = {
   LBY: "situation-unstable", // Libye
   BFA: "situation-unstable", // Burkina Faso
   ARG: "situation-unstable", // Argentine
+  ESH: "situation-unstable", // Sahara Occidental
+
   BRA: "strong-interest", // Brésil
   ZAF: "strong-interest", // Afrique du Sud
   TWN: "strong-interest", // Taïwan
@@ -81,31 +94,47 @@ export const countryCategories = {
   IDN: "strong-interest", // Indonésie
   PHL: "strong-interest", // Philippines
   MYS: "strong-interest", // Malaisie
+  OMN: "strong-interest", // Oman
+  BWA: "strong-interest", // Botswana
+  MUS: "strong-interest", // Maurice
+  SYC: "strong-interest", // Seychelles
+  BEN: "strong-interest", // Bénin
+
+  CAN: "interesting", // Canada
   CHN: "interesting", // Chine
   KAZ: "interesting", // Kazakhstan
   UGA: "interesting", // Ouganda
   TZA: "interesting", // Tanzanie
-  KYZ: "interesting", // Kirghizistan
+  KGZ: "interesting", // Kirghizistan
+  MNG: "interesting", // Mongolie
+  PNG: "interesting", // Papouasie-Nouvelle-Guinée
   GEO: "interesting", // Géorgie
   DZA: "interesting", // Algérie
-  TUN: "interesting", // Tunisie
+  TUR: "interesting", // Turquie
   GBR: "interesting", // Royaume-Uni
   ESP: "interesting", // Espagne
   EGY: "interesting", // Égypte
   ITA: "interesting", // Italie
-  MLT: "interesting", // Malte
-  CYP: "interesting", // Chypre
   GAB: "interesting", // Gabon
   CMR: "interesting", // Cameroun
+  CRI: "interesting", // Costa Rica
   PER: "interesting", // Pérou
   CHL: "interesting", // Chili
+  MEX: "interesting", // Mexique
   LBR: "interesting", // Libéria
+  MWI: "interesting", // Malawi
+  NAM: "interesting", // Namibie
   COG: "interesting", // Congo (République du)
   CZE: "interesting", // Tchéquie
   SVK: "interesting", // Slovaquie
   SAU: "interesting", // Arabie saoudite
   AUS: "interesting", // Australie
   NZL: "interesting", // Nouvelle-Zélande
+  KWT: "interesting", // Koweït
+  GMB: "interesting", // Gambie
+  SLE: "interesting", // Sierra Leone
+  TGO: "interesting", // Togo
+
   FIN: "curiosity", // Finlande
   NOR: "curiosity", // Norvège
   SWE: "curiosity", // Suède
@@ -116,20 +145,44 @@ export const countryCategories = {
   NLD: "curiosity", // Pays-Bas
   GRC: "curiosity", // Grèce
   CHE: "curiosity", // Suisse
+  CYP: "curiosity", // Chypre
+  CUB: "curiosity", // Cuba
   AUT: "curiosity", // Autriche
+  BOL: "curiosity", // Bolivie
   BGR: "curiosity", // Bulgarie
   EST: "curiosity", // Estonie
+  GRL: "curiosity", // Groenland
+  MRT: "curiosity", // Mauritanie
   LIE: "curiosity", // Liechtenstein
   AND: "curiosity", // Andorre
   PRT: "curiosity", // Portugal
+  POL: "curiosity", // Pologne
   SVN: "curiosity", // Slovénie
   IND: "curiosity", // Inde
+  IRL: "curiosity", // Irlande
   JPN: "curiosity", // Japon
+  KHM: "curiosity", // Cambodge
+  LAO: "curiosity", // Laos
   KOR: "curiosity", // Corée du Sud
   HRV: "curiosity", // Croatie
-  FID: "curiosity", // Fidji
+  MLT: "curiosity", // Malte
+  FJI: "curiosity", // Fidji
   BTN: "curiosity", // Bhoutan
   NPL: "curiosity", // Népal
+  PAN: "curiosity", // Panama
+  URY: "curiosity", // Uruguay
+  TJK: "curiosity", // Tadjikistan
+  SLB: "curiosity", // Îles Salomon
+  JOR: "curiosity", // Jordanie
+  ZMB: "curiosity", // Zambie
+  COM: "curiosity", // Comores
+  MDV: "curiosity", // Maldives
+  STP: "curiosity", // Sao Tomé-et-Principe
+  GUY: "curiosity", // Guyana
+  DOM: "curiosity", // République dominicaine
+  NRU: "curiosity", // Nauru
+  TUN: "curiosity", // Tunisie
+
   BEL: "work-conditional", // Belgique
   HUN: "work-conditional", // Hongrie
   ROU: "work-conditional", // Roumanie
@@ -143,21 +196,99 @@ export const countryCategories = {
   MNE: "work-conditional", // Monténégro
   XKX: "work-conditional", // Kosovo
   MDA: "work-conditional", // Moldavie
+  PRY: "work-conditional", // Paraguay
   QAT: "work-conditional", // Qatar
+  TUV: "work-conditional", // Tuvalu
+  VUT: "work-conditional", // Vanuatu
+  ERI: "work-conditional", // Érythrée
+  TCD: "work-conditional", // Tchad
+  CAF: "work-conditional", // Centrafrique
+  BDI: "work-conditional", // Burundi
+  ZWE: "work-conditional", // Zimbabwe
+  SWZ: "work-conditional", // Eswatini
+  LSO: "work-conditional", // Lesotho
+  GIN: "work-conditional", // Guinée
+  GNB: "work-conditional", // Guinée-Bissau
+  COL: "work-conditional", // Colombie
+  VEN: "work-conditional", // Venezuela
+  GNQ: "work-conditional", // Guinée équatoriale
+  JAM: "work-conditional", // Jamaïque
+  BHS: "work-conditional", // Bahamas
+  GTM: "work-conditional", // Guatemala
+  HND: "work-conditional", // Honduras
+  SLV: "work-conditional", // Salvador
+  USA: "work-conditional" // États-Unis (reste)
+} as const;
+
+export const countryExplanations = {
+  SEN: "Pays à fort potentiel de développement, culture extrêmement riche, climat chaud, cuisine exceptionnelle"
 } as const;
 
 export const usaOverrideColor = "#ffffff00";
 
 export const stateCategories = {
-  CA: "priority",
+  CA: "strong-interest",
+
   NY: "strong-interest",
   DC: "strong-interest",
+
   GA: "interesting",
   IL: "interesting",
-  WA: "interesting",
   LA: "interesting",
   MA: "interesting",
-  MS: "curiosity",
+  WA: "interesting",
+
+  AZ: "curiosity",
+  CO: "curiosity",
+  CT: "curiosity",
   FL: "curiosity",
-  ME: "curiosity"
+  ME: "curiosity",
+  MS: "curiosity",
+  NJ: "curiosity",
+  NM: "curiosity",
+  NV: "curiosity",
+  RI: "curiosity",
+
+  AK: "work-conditional",
+  AL: "work-conditional",
+  AR: "work-conditional",
+  AS: "work-conditional",
+  DE: "work-conditional",
+  GU: "work-conditional",
+  HI: "work-conditional",
+  IA: "work-conditional",
+  ID: "work-conditional",
+  IN: "work-conditional",
+  KS: "work-conditional",
+  KY: "work-conditional",
+  MD: "work-conditional",
+  MI: "work-conditional",
+  MN: "work-conditional",
+  MO: "work-conditional",
+  MP: "work-conditional",
+  MT: "work-conditional",
+  NC: "work-conditional",
+  ND: "work-conditional",
+  NE: "work-conditional",
+  NH: "work-conditional",
+  OH: "work-conditional",
+  OK: "work-conditional",
+  OR: "work-conditional",
+  PA: "work-conditional",
+  PR: "work-conditional",
+  SC: "work-conditional",
+  SD: "work-conditional",
+  TN: "work-conditional",
+  TX: "work-conditional",
+  UT: "work-conditional",
+  VA: "work-conditional",
+  VI: "work-conditional",
+  VT: "work-conditional",
+  WI: "work-conditional",
+  WV: "work-conditional",
+  WY: "work-conditional"
+} as const;
+
+export const stateExplanations = {
+  NY: "NYC uniquement"
 } as const;

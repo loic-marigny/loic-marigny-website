@@ -7,12 +7,33 @@ interface ComingMapOptions {
   countryCategories?: Record<string, string>;
   stateCategories?: Record<string, string>;
   defaultCategoryId?: string;
+  countryExplanations?: Record<string, string>;
+  stateExplanations?: Record<string, string>;
+  categoryLabels?: Record<string, string>;
 }
 
 declare const maplibregl: any;
 
 const FILTER_ALL = "__all__";
 const HIDDEN_COLOR = "#ffffff";
+
+const escapeHtml = (value: string) =>
+  value.replace(/[&<>"']/g, (char) => {
+    switch (char) {
+      case "&":
+        return "&amp;";
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      case '"':
+        return "&quot;";
+      case "'":
+        return "&#39;";
+      default:
+        return char;
+    }
+  });
 
 function readOptionsFromDataset(): ComingMapOptions | null {
   const mapElement = document.getElementById("map");
@@ -24,7 +45,10 @@ function readOptionsFromDataset(): ComingMapOptions | null {
     defaultFillColor,
     countryCategories,
     stateCategories,
-    defaultCategoryId
+    defaultCategoryId,
+    countryExplanations,
+    stateExplanations,
+    categoryLabels
   } = mapElement.dataset as Record<string, string | undefined>;
 
   if (!countryColors || !stateColors || !defaultFillColor) return null;
@@ -36,7 +60,10 @@ function readOptionsFromDataset(): ComingMapOptions | null {
       defaultFillColor,
       countryCategories: countryCategories ? JSON.parse(countryCategories) : undefined,
       stateCategories: stateCategories ? JSON.parse(stateCategories) : undefined,
-      defaultCategoryId
+      defaultCategoryId,
+      countryExplanations: countryExplanations ? JSON.parse(countryExplanations) : undefined,
+      stateExplanations: stateExplanations ? JSON.parse(stateExplanations) : undefined,
+      categoryLabels: categoryLabels ? JSON.parse(categoryLabels) : undefined
     };
   } catch (error) {
     console.warn(
@@ -59,7 +86,10 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
     defaultFillColor,
     countryCategories = {},
     stateCategories = {},
-    defaultCategoryId = ""
+    defaultCategoryId = "",
+    countryExplanations = {},
+    stateExplanations = {},
+    categoryLabels = {}
   } = options;
 
   const getCountryCategory = (iso: string) =>
@@ -184,7 +214,35 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
         props.stusps ||
         "Zone";
 
-      popupEl.textContent = name;
+      const iso = props.iso_a3 as string | undefined;
+      const stateCode = props.stusps as string | undefined;
+
+      let categoryId = defaultCategoryId;
+      let explanation = "";
+
+      if (iso && iso !== "USA") {
+        categoryId = getCountryCategory(iso);
+        explanation = countryExplanations[iso] ?? "";
+      } else if (stateCode) {
+        categoryId = getStateCategory(stateCode);
+        explanation = stateExplanations[stateCode] ?? "";
+      }
+
+      const categoryLabel =
+        categoryLabels[categoryId] ?? (categoryId ? categoryId : "");
+
+      const escapedName = escapeHtml(name);
+      const escapedCategory = categoryLabel ? escapeHtml(categoryLabel) : "";
+      const escapedExplanation = explanation ? escapeHtml(explanation) : "";
+
+      const firstLine = escapedCategory
+        ? `${escapedName} <span aria-hidden="true">•</span> <em>${escapedCategory}</em>`
+        : escapedName;
+      const html = escapedExplanation
+        ? `${firstLine}<br><span class="popup-explanation">${escapedExplanation}</span>`
+        : firstLine;
+
+      popupEl.innerHTML = html;
       popupEl.style.left = `${e.point.x}px`;
       popupEl.style.top = `${e.point.y}px`;
       popupEl.style.opacity = "1";

@@ -4,7 +4,9 @@ import "../../styles/coming-map.css";
 import {
   mapCategories,
   countryCategories,
+  countryExplanations,
   stateCategories,
+  stateExplanations,
   usaOverrideColor,
   DEFAULT_FILL_COLOR,
   DEFAULT_CATEGORY_ID
@@ -13,6 +15,10 @@ import comingMapScript from "../../scripts/comingMap.ts?url";
 
 const categoryColorById = Object.fromEntries(
   mapCategories.map((category) => [category.id, category.color] as const)
+);
+
+const categoryLabelById = Object.fromEntries(
+  mapCategories.map((category) => [category.id, category.label] as const)
 );
 
 const countryColors: Record<string, string> = Object.fromEntries(
@@ -38,6 +44,9 @@ const serializedStateColors = JSON.stringify(stateColors);
 const serializedCountryCategories = JSON.stringify(countryCategories);
 const serializedStateCategories = JSON.stringify(stateCategories);
 const serializedCategoryColors = JSON.stringify(categoryColorById);
+const serializedCategoryLabels = JSON.stringify(categoryLabelById);
+const serializedCountryExplanations = JSON.stringify(countryExplanations);
+const serializedStateExplanations = JSON.stringify(stateExplanations);
 const defaultFillColor = DEFAULT_FILL_COLOR;
 const defaultCategoryId = DEFAULT_CATEGORY_ID;
 const legendCategories = mapCategories.filter(
@@ -78,9 +87,12 @@ const legendCategories = mapCategories.filter(
       aria-label="Carte du monde interactif montrant mes destinations potentielles"
       data-country-colors={serializedCountryColors}
       data-country-categories={serializedCountryCategories}
+      data-country-explanations={serializedCountryExplanations}
       data-state-colors={serializedStateColors}
       data-state-categories={serializedStateCategories}
+      data-state-explanations={serializedStateExplanations}
       data-category-colors={serializedCategoryColors}
+      data-category-labels={serializedCategoryLabels}
       data-default-fill-color={defaultFillColor}
       data-default-category-id={defaultCategoryId}
     ></div>
