@@ -1,5 +1,17 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import "../../styles/coming-map.css";
+import {
+  mapCategories,
+  countryColors,
+  stateColors,
+  DEFAULT_FILL_COLOR
+} from "../../data/mapDestinations";
+import comingMapScript from "../../scripts/comingMap.ts?url";
+
+const serializedCountryColors = JSON.stringify(countryColors);
+const serializedStateColors = JSON.stringify(stateColors);
+const defaultFillColor = DEFAULT_FILL_COLOR;
 ---
 
 <Layout title="A venir" description="My goals and objectives.">
@@ -18,32 +30,28 @@ import Layout from "../../layouts/Layout.astro";
       <label for="colorFilter">Filtrer par couleur :</label>
       <select id="colorFilter">
         <option value="__all__">Tous</option>
-        <option value="#4F46E5">Prioritaire</option>
-        <option value="#10B981">Intéressant</option>
-        <option value="#F59E0B">Curiosité</option>
-        <option value="#EF4444">Moins probable</option>
+        {mapCategories.map((category) => (
+          <option value={category.color}>{category.label}</option>
+        ))}
       </select>
     </div>
 
-    <div id="map" class="map-container" aria-label="Carte du monde interactif montrant mes destinations potentielles"></div>
+    <div
+      id="map"
+      class="map-container"
+      aria-label="Carte du monde interactif montrant mes destinations potentielles"
+      data-country-colors={serializedCountryColors}
+      data-state-colors={serializedStateColors}
+      data-default-fill-color={defaultFillColor}
+    ></div>
 
     <div class="legend" aria-hidden="false">
-      <div class="legend-item">
-        <span class="swatch" style="background:#4F46E5;"></span>
-        <span>Prioritaire</span>
-      </div>
-      <div class="legend-item">
-        <span class="swatch" style="background:#10B981;"></span>
-        <span>Intéressant</span>
-      </div>
-      <div class="legend-item">
-        <span class="swatch" style="background:#F59E0B;"></span>
-        <span>Curiosité</span>
-      </div>
-      <div class="legend-item">
-        <span class="swatch" style="background:#EF4444;"></span>
-        <span>Moins probable</span>
-      </div>
+      {mapCategories.map((category) => (
+        <div class="legend-item">
+          <span class="swatch" style={`background:${category.color};`}></span>
+          <span>{category.label}</span>
+        </div>
+      ))}
       <div class="legend-hint">
         Survolez une zone pour plus d'infos.
       </div>
@@ -52,103 +60,6 @@ import Layout from "../../layouts/Layout.astro";
     <!-- Popup custom -->
     <div id="hoverPopup" class="hover-popup" role="status" aria-live="polite"></div>
   </section>
-
-  <style>
-    .map-section {
-      position: relative;
-      max-width: 900px;
-      margin: 2rem 0;
-      border: 1px solid #e5e7eb;
-      border-radius: 1rem;
-      padding: 1rem;
-      background: #fff;
-      box-shadow: 0 10px 30px rgb(0 0 0 / 0.07);
-    }
-
-    .map-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .map-container {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      min-height: 400px;
-      border-radius: 0.75rem;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* MapLibre GL CSS (container wants position:relative already) */
-    .map-container :global(.maplibregl-canvas) {
-      outline: none;
-    }
-
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.75rem 1.25rem;
-      font-size: 0.8rem;
-      line-height: 1.2;
-      color: #374151;
-      margin-top: 0.75rem;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .swatch {
-      width: 14px;
-      height: 14px;
-      border-radius: 4px;
-      border: 1px solid #00000022;
-      flex-shrink: 0;
-    }
-    .legend-hint {
-      color: #6b7280;
-      font-style: italic;
-    }
-
-    .hover-popup {
-      position: absolute;
-      pointer-events: none;
-      background: rgba(17, 24, 39, 0.9); /* gris presque noir */
-      color: white;
-      padding: 0.5rem 0.6rem;
-      font-size: 0.75rem;
-      line-height: 1.2;
-      border-radius: 0.5rem;
-      box-shadow: 0 10px 20px rgb(0 0 0 / 0.3);
-      min-width: 120px;
-      max-width: 220px;
-      opacity: 0;
-      transform: translate(-50%, calc(-100% - 8px));
-      transition: opacity 120ms ease;
-      pointer-events: none;
-      z-index: 20;
-    }
-
-    /* petit triangle */
-    .hover-popup::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: -5px;
-      transform: translateX(-50%);
-      border-width: 5px 5px 0 5px;
-      border-style: solid;
-      border-color: rgba(17, 24, 39, 0.9) transparent transparent transparent;
-    }
-  </style>
-
   <!-- Dépendances MapLibre GL -->
   <link
     rel="stylesheet"
@@ -160,194 +71,5 @@ import Layout from "../../layouts/Layout.astro";
   ></script>
 
   <!-- Script carte -->
-  <script defer>
-    // Couleurs custom par pays/territoire (clé = iso_a3)
-    // NOTE : inclure PSE (État de Palestine), TWN (Taïwan), ESH (Sahara occidental), etc.
-    const countryColors = {
-      "FRA": "#4F46E5",
-      "DEU": "#F59E0B",
-      "ESP": "#10B981",
-      "PSE": "#4F46E5", // Palestine
-      "TWN": "#4F46E5", // Taïwan
-      "ESH": "#F59E0B", // Sahara occidental
-      "USA": "#ffffff00", // transparent, car remplacé par les États
-      // ...ajoute ce que tu veux
-    };
-
-    // Couleurs custom par État US (clé = code postal genre 'CA', 'TX', etc.)
-    const stateColors = {
-      "CA": "#EF4444",
-      "TX": "#10B981",
-      "NY": "#4F46E5",
-      "FL": "#F59E0B",
-      // ...
-    };
-
-    // Helper: récupère la couleur d'un pays
-    function getCountryColor(iso) {
-      return countryColors[iso] || "#e5e7eb"; // gris clair par défaut
-    }
-
-    // Helper: récupère la couleur d'un État US
-    function getStateColor(st) {
-      return stateColors[st] || "#e5e7eb";
-    }
-
-    // Filtrage par couleur
-    // si filterColor != "__all__", tout ce qui n'a pas cette couleur devient blanc
-    function buildColorExpressionForCountries(filterColor) {
-      // MapLibre 'match' expression: ["match", ["get", "iso_a3"], "FRA", "#4F46E5", ... , "#e5e7eb"]
-      const expr = ["match", ["get", "iso_a3"]];
-      for (const iso in countryColors) {
-        const col = countryColors[iso];
-        expr.push(iso);
-        if (filterColor === "__all__" || col === filterColor) {
-          expr.push(col);
-        } else {
-          expr.push("#ffffff");
-        }
-      }
-      // valeur par défaut :
-      expr.push("#e5e7eb");
-      return expr;
-    }
-
-    function buildColorExpressionForStates(filterColor) {
-      const expr = ["match", ["get", "stusps"]];
-      for (const st in stateColors) {
-        const col = stateColors[st];
-        expr.push(st);
-        if (filterColor === "__all__" || col === filterColor) {
-          expr.push(col);
-        } else {
-          expr.push("#ffffff");
-        }
-      }
-      expr.push("#e5e7eb");
-      return expr;
-    }
-
-    // Initialisation après chargement de MapLibre
-    window.addEventListener("DOMContentLoaded", () => {
-      const map = new maplibregl.Map({
-        container: "map",
-        style: {
-          version: 8,
-          sources: {
-            // Source monde
-            world: {
-              type: "geojson",
-              data: "/geo/world.geojson"
-            },
-            // Source États US
-            usStates: {
-              type: "geojson",
-              data: "/geo/us_states.geojson"
-            }
-          },
-          layers: [
-            // Pays du monde
-            {
-              id: "world-fill",
-              type: "fill",
-              source: "world",
-              paint: {
-                "fill-color": buildColorExpressionForCountries("__all__"),
-                "fill-opacity": 0.9
-              }
-            },
-            {
-              id: "world-outline",
-              type: "line",
-              source: "world",
-              paint: {
-                "line-color": "#ffffff",
-                "line-width": 0.5
-              }
-            },
-            // États US par-dessus
-            {
-              id: "states-fill",
-              type: "fill",
-              source: "usStates",
-              paint: {
-                "fill-color": buildColorExpressionForStates("__all__"),
-                "fill-opacity": 0.95
-              }
-            },
-            {
-              id: "states-outline",
-              type: "line",
-              source: "usStates",
-              paint: {
-                "line-color": "#ffffff",
-                "line-width": 0.5
-              }
-            }
-          ]
-        },
-        center: [0, 20], // longitude, latitude
-        zoom: 1.1,
-        minZoom: 1,
-        maxZoom: 10
-      });
-
-      map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
-
-      // Popup custom "au survol"
-      const popupEl = document.getElementById("hoverPopup");
-
-      function showPopup(e, feature) {
-        if (!feature) return;
-        const props = feature.properties || {};
-        // nom : côté monde -> props.name || props.ADMIN
-        // côté états -> props.name
-        const name =
-          props.name ||
-          props.ADMIN ||
-          props.abbrev ||
-          props.stusps ||
-          "Zone";
-
-        popupEl.textContent = name;
-
-        // place le popup vers la souris
-        popupEl.style.left = e.point.x + "px";
-        popupEl.style.top = e.point.y + "px";
-        popupEl.style.opacity = 1;
-      }
-
-      function hidePopup() {
-        popupEl.style.opacity = 0;
-      }
-
-      // Survol des pays du monde
-      map.on("mousemove", "world-fill", (e) => {
-        const f = e.features && e.features[0];
-        // On ne veut pas survoler l'USA du layer monde (pour éviter le doublon),
-        // donc si iso_a3 === "USA", on l'ignore
-        if (f && f.properties && f.properties.iso_a3 === "USA") {
-          hidePopup();
-          return;
-        }
-        showPopup(e, f);
-      });
-      map.on("mouseleave", "world-fill", hidePopup);
-
-      // Survol des États US
-      map.on("mousemove", "states-fill", (e) => {
-        const f = e.features && e.features[0];
-        showPopup(e, f);
-      });
-      map.on("mouseleave", "states-fill", hidePopup);
-
-      // Filtre par couleur
-      const select = document.getElementById("colorFilter");
-      select.addEventListener("change", () => {
-        const val = select.value;
-        map.setPaintProperty("world-fill", "fill-color", buildColorExpressionForCountries(val));
-        map.setPaintProperty("states-fill", "fill-color", buildColorExpressionForStates(val));
-      });
-    });
-  </script>
+  <script type="module" src={comingMapScript}></script>
 </Layout>
