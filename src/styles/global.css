@@ -139,6 +139,17 @@ a:hover {
   border-bottom-right-radius: 0.5rem;
 }
 
+.nav-item--has-submenu::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: transparent;
+  transition: background 0.18s ease;
+}
+
 .nav-item--has-submenu:hover > .nav-link,
 .nav-item--has-submenu:focus-within > .nav-link {
   border-bottom-left-radius: 0;
@@ -151,6 +162,11 @@ a:hover {
   background: transparent;
 }
 
+.nav-item--has-submenu:hover::after,
+.nav-item--has-submenu:focus-within::after {
+  background: var(--brand);
+}
+
 .nav-item--has-submenu > .nav-link:hover::before,
 .nav-item--has-submenu > .nav-link:focus-visible::before {
   background: rgba(255, 255, 255, 0.12);
@@ -160,7 +176,8 @@ a:hover {
   position: absolute;
   --submenu-offset-x: 0.45rem;
   left: calc(-1 * var(--submenu-offset-x));
-  transform: translateY(-6px);
+  transform: translateY(-6px) scaleY(0.85);
+  transform-origin: top center;
   top: calc(100% - 2px);
   min-width: calc(100% + 1rem);
   max-width: 12rem;
@@ -169,10 +186,9 @@ a:hover {
   background: var(--brand);
   --submenu-border-offset: 2.12rem; /* distance before the decorative border starts */
   box-shadow: none;
-  opacity: 0;
-  visibility: hidden;
+  visibility: hidden; /* guard after transition */
   pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition: transform 1s cubic-bezier(0.22, 0.7, 0.38, 1);
   z-index: 12;
 }
 
@@ -187,14 +203,21 @@ a:hover {
   border-top: 0;
   border-radius: 0 0 0.85rem 0.85rem;
   pointer-events: none;
+  transform: scaleY(0.22);
+  transform-origin: top;
+  transition: height 0.1s cubic-bezier(0.18, 0.65, 0.35, 1);
 }
 
 .nav-item--has-submenu:hover .submenu-panel,
 .nav-item--has-submenu:focus-within .submenu-panel {
-  opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: translateY(0) scaleY(1);
+}
+
+.nav-item--has-submenu:hover .submenu-panel::after,
+.nav-item--has-submenu:focus-within .submenu-panel::after {
+  transform: scaleY(1);
 }
 
 .submenu {
@@ -256,6 +279,7 @@ a:hover {
   .nav-link,
   .nav-link::before,
   .submenu-panel,
+  .submenu-panel::after,
   .submenu-link {
     transition: none;
   }
