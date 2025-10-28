@@ -305,9 +305,9 @@ a:hover {
 =================================*/
 main {
   flex: 1;
-  max-width: 900px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1.5rem 2rem;
 }
 
 /* Typography */

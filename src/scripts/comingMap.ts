@@ -22,10 +22,10 @@ interface DestinationMeta {
 
 declare const maplibregl: any;
 
-const FILTER_ALL = "__all__";
 const HIDDEN_COLOR = "#ffffff";
 const DEFAULT_LOCALE = "fr";
 const LOCALE_FALLBACKS = [DEFAULT_LOCALE, "en"];
+const FILTER_ALL_KEY = "__all__";
 
 const escapeHtml = (value: string) =>
   value.replace(/[&<>"']/g, (char) => {
@@ -118,32 +118,36 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
     return first ?? "";
   };
 
-  const buildColorExpressionForCountries = (filterCategory: string) => {
+  const buildColorExpressionForCountries = (filterCategories: string[] | null) => {
+    const activeSet =
+      filterCategories && filterCategories.length
+        ? new Set(filterCategories)
+        : null;
     const expr: (string | any[])[] = ["match", ["get", "iso_a3"]];
     for (const iso of Object.keys(countryColors)) {
       const color = countryColors[iso];
       const categoryId = getCountryCategory(iso);
       expr.push(iso);
       expr.push(
-        filterCategory === FILTER_ALL || filterCategory === categoryId
-          ? color
-          : HIDDEN_COLOR
+        !activeSet || activeSet.has(categoryId) ? color : HIDDEN_COLOR
       );
     }
     expr.push(defaultFillColor);
     return expr;
   };
 
-  const buildColorExpressionForStates = (filterCategory: string) => {
+  const buildColorExpressionForStates = (filterCategories: string[] | null) => {
+    const activeSet =
+      filterCategories && filterCategories.length
+        ? new Set(filterCategories)
+        : null;
     const expr: (string | any[])[] = ["match", ["get", "stusps"]];
     for (const code of Object.keys(stateColors)) {
       const color = stateColors[code];
       const categoryId = getStateCategory(code);
       expr.push(code);
       expr.push(
-        filterCategory === FILTER_ALL || filterCategory === categoryId
-          ? color
-          : HIDDEN_COLOR
+        !activeSet || activeSet.has(categoryId) ? color : HIDDEN_COLOR
       );
     }
     expr.push(defaultFillColor);
@@ -184,7 +188,7 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
             type: "fill",
             source: "world",
             paint: {
-              "fill-color": buildColorExpressionForCountries(FILTER_ALL),
+              "fill-color": buildColorExpressionForCountries(null),
               "fill-opacity": 0.9
             }
           },
@@ -202,7 +206,7 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
             type: "fill",
             source: "usStates",
             paint: {
-              "fill-color": buildColorExpressionForStates(FILTER_ALL),
+              "fill-color": buildColorExpressionForStates(null),
               "fill-opacity": 0.95
             }
           },
@@ -288,6 +292,73 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
       if (popupEl) popupEl.style.opacity = "0";
     };
 
+    let lastFilterKey = "";
+    const applyCategoryFilter = (rawCategoryIds: string[]) => {
+      if (!map?.style) return;
+      const normalized = rawCategoryIds
+        .map((id) => id.trim())
+        .filter((id) => id.length > 0);
+      const key =
+        normalized.length > 0
+          ? normalized.slice().sort().join("|")
+          : FILTER_ALL_KEY;
+      if (!map.getLayer("world-fill") || !map.getLayer("states-fill")) {
+        map.once("idle", () => applyCategoryFilter([...normalized]));
+        return;
+      }
+      if (key === lastFilterKey) return;
+      lastFilterKey = key;
+      const activeCategories = normalized.length ? normalized : null;
+      map.setPaintProperty(
+        "world-fill",
+        "fill-color",
+        buildColorExpressionForCountries(activeCategories)
+      );
+      map.setPaintProperty(
+        "states-fill",
+        "fill-color",
+        buildColorExpressionForStates(activeCategories)
+      );
+    };
+
+    const setupCategoryFilters = () => {
+      const groups = Array.from(
+        document.querySelectorAll<HTMLDetailsElement>(
+          ".destinations-group[data-category-id]"
+        )
+      );
+      if (!groups.length) return;
+
+      let suppressToggle = false;
+
+      const collectActiveCategories = () =>
+        groups
+          .filter((group) => group.open)
+          .map((group) => group.dataset.categoryId ?? "")
+          .filter((id): id is string => id.length > 0);
+
+      const scheduleApply = () => {
+        window.requestAnimationFrame(() => {
+          applyCategoryFilter(collectActiveCategories());
+        });
+      };
+
+      groups.forEach((group) => {
+        group.addEventListener("toggle", () => {
+          if (!suppressToggle && group.open) {
+            suppressToggle = true;
+            for (const other of groups) {
+              if (other !== group && other.open) {
+                other.open = false;
+              }
+            }
+            suppressToggle = false;
+          }
+          scheduleApply();
+        });
+      });
+    };
+
     map.on("mousemove", "world-fill", (e: any) => {
       const feature = e.features?.[0];
       if (feature?.properties?.iso_a3 === "USA") {
@@ -304,24 +375,7 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
     });
     map.on("mouseleave", "states-fill", hidePopup);
 
-    const select = document.getElementById(
-      "colorFilter"
-    ) as HTMLSelectElement | null;
-    if (select) {
-      select.addEventListener("change", () => {
-        const value = select.value;
-        map.setPaintProperty(
-          "world-fill",
-          "fill-color",
-          buildColorExpressionForCountries(value)
-        );
-        map.setPaintProperty(
-          "states-fill",
-          "fill-color",
-          buildColorExpressionForStates(value)
-        );
-      });
-    }
+    setupCategoryFilters();
   };
 
   if (document.readyState === "loading") {

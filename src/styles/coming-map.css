@@ -247,7 +247,7 @@
 
 .map-section {
   position: relative;
-  max-width: 900px;
+  max-width: none;
   margin: 0;
   border: 1px solid #e5e7eb;
   border-radius: 1rem;
