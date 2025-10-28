@@ -7,15 +7,25 @@ interface ComingMapOptions {
   countryCategories?: Record<string, string>;
   stateCategories?: Record<string, string>;
   defaultCategoryId?: string;
-  countryExplanations?: Record<string, string>;
-  stateExplanations?: Record<string, string>;
+  countryMeta?: Record<string, DestinationMeta>;
+  stateMeta?: Record<string, DestinationMeta>;
   categoryLabels?: Record<string, string>;
+}
+
+type LocalizedText = Record<string, string>;
+
+interface DestinationMeta {
+  categoryId: string;
+  names?: LocalizedText;
+  explanation?: LocalizedText;
 }
 
 declare const maplibregl: any;
 
 const FILTER_ALL = "__all__";
 const HIDDEN_COLOR = "#ffffff";
+const DEFAULT_LOCALE = "fr";
+const LOCALE_FALLBACKS = [DEFAULT_LOCALE, "en"];
 
 const escapeHtml = (value: string) =>
   value.replace(/[&<>"']/g, (char) => {
@@ -46,8 +56,8 @@ function readOptionsFromDataset(): ComingMapOptions | null {
     countryCategories,
     stateCategories,
     defaultCategoryId,
-    countryExplanations,
-    stateExplanations,
+    countryMeta,
+    stateMeta,
     categoryLabels
   } = mapElement.dataset as Record<string, string | undefined>;
 
@@ -61,8 +71,8 @@ function readOptionsFromDataset(): ComingMapOptions | null {
       countryCategories: countryCategories ? JSON.parse(countryCategories) : undefined,
       stateCategories: stateCategories ? JSON.parse(stateCategories) : undefined,
       defaultCategoryId,
-      countryExplanations: countryExplanations ? JSON.parse(countryExplanations) : undefined,
-      stateExplanations: stateExplanations ? JSON.parse(stateExplanations) : undefined,
+      countryMeta: countryMeta ? JSON.parse(countryMeta) : undefined,
+      stateMeta: stateMeta ? JSON.parse(stateMeta) : undefined,
       categoryLabels: categoryLabels ? JSON.parse(categoryLabels) : undefined
     };
   } catch (error) {
@@ -87,15 +97,26 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
     countryCategories = {},
     stateCategories = {},
     defaultCategoryId = "",
-    countryExplanations = {},
-    stateExplanations = {},
+    countryMeta = {},
+    stateMeta = {},
     categoryLabels = {}
   } = options;
 
   const getCountryCategory = (iso: string) =>
-    countryCategories[iso] ?? defaultCategoryId;
+    countryCategories[iso] ??
+    countryMeta[iso]?.categoryId ??
+    defaultCategoryId;
   const getStateCategory = (code: string) =>
-    stateCategories[code] ?? defaultCategoryId;
+    stateCategories[code] ?? stateMeta[code]?.categoryId ?? defaultCategoryId;
+
+  const pickLocalized = (text: LocalizedText | undefined) => {
+    if (!text) return "";
+    for (const locale of LOCALE_FALLBACKS) {
+      if (text[locale]) return text[locale] ?? "";
+    }
+    const first = Object.values(text)[0];
+    return first ?? "";
+  };
 
   const buildColorExpressionForCountries = (filterCategory: string) => {
     const expr: (string | any[])[] = ["match", ["get", "iso_a3"]];
@@ -219,19 +240,34 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
 
       let categoryId = defaultCategoryId;
       let explanation = "";
+      let displayName = name;
 
       if (iso && iso !== "USA") {
-        categoryId = getCountryCategory(iso);
-        explanation = countryExplanations[iso] ?? "";
+        const meta = countryMeta[iso];
+        if (meta) {
+          categoryId = meta.categoryId ?? categoryId;
+          const localizedName = pickLocalized(meta.names);
+          if (localizedName) displayName = localizedName;
+          explanation = pickLocalized(meta.explanation);
+        } else {
+          categoryId = getCountryCategory(iso);
+        }
       } else if (stateCode) {
-        categoryId = getStateCategory(stateCode);
-        explanation = stateExplanations[stateCode] ?? "";
+        const meta = stateMeta[stateCode];
+        if (meta) {
+          categoryId = meta.categoryId ?? categoryId;
+          const localizedName = pickLocalized(meta.names);
+          if (localizedName) displayName = localizedName;
+          explanation = pickLocalized(meta.explanation);
+        } else {
+          categoryId = getStateCategory(stateCode);
+        }
       }
 
       const categoryLabel =
         categoryLabels[categoryId] ?? (categoryId ? categoryId : "");
 
-      const escapedName = escapeHtml(name);
+      const escapedName = escapeHtml(displayName);
       const escapedCategory = categoryLabel ? escapeHtml(categoryLabel) : "";
       const escapedExplanation = explanation ? escapeHtml(explanation) : "";
 

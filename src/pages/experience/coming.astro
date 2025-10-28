@@ -4,9 +4,10 @@ import "../../styles/coming-map.css";
 import {
   mapCategories,
   countryCategories,
-  countryExplanations,
+  countryMeta,
+  countriesByCategory,
   stateCategories,
-  stateExplanations,
+  stateMeta,
   usaOverrideColor,
   DEFAULT_FILL_COLOR,
   DEFAULT_CATEGORY_ID
@@ -22,9 +23,9 @@ const categoryLabelById = Object.fromEntries(
 );
 
 const countryColors: Record<string, string> = Object.fromEntries(
-  Object.entries(countryCategories).map(([iso, categoryId]) => [
+  Object.entries(countryMeta).map(([iso, meta]) => [
     iso,
-    categoryColorById[categoryId] ?? DEFAULT_FILL_COLOR
+    categoryColorById[meta.categoryId] ?? DEFAULT_FILL_COLOR
   ])
 );
 
@@ -33,9 +34,9 @@ if (usaOverrideColor) {
 }
 
 const stateColors: Record<string, string> = Object.fromEntries(
-  Object.entries(stateCategories).map(([state, categoryId]) => [
+  Object.entries(stateMeta).map(([state, meta]) => [
     state,
-    categoryColorById[categoryId] ?? DEFAULT_FILL_COLOR
+    categoryColorById[meta.categoryId] ?? DEFAULT_FILL_COLOR
   ])
 );
 
@@ -44,9 +45,9 @@ const serializedStateColors = JSON.stringify(stateColors);
 const serializedCountryCategories = JSON.stringify(countryCategories);
 const serializedStateCategories = JSON.stringify(stateCategories);
 const serializedCategoryColors = JSON.stringify(categoryColorById);
+const serializedCountryMeta = JSON.stringify(countryMeta);
+const serializedStateMeta = JSON.stringify(stateMeta);
 const serializedCategoryLabels = JSON.stringify(categoryLabelById);
-const serializedCountryExplanations = JSON.stringify(countryExplanations);
-const serializedStateExplanations = JSON.stringify(stateExplanations);
 const defaultFillColor = DEFAULT_FILL_COLOR;
 const defaultCategoryId = DEFAULT_CATEGORY_ID;
 const legendCategories = mapCategories.filter(
@@ -54,7 +55,7 @@ const legendCategories = mapCategories.filter(
 );
 ---
 
-<Layout title="A venir" description="My goals and objectives.">
+<Layout title="À venir" description="My goals and objectives.">
   <h1>À venir</h1>
   <p>
     Voici quelques objectifs et projets que je prévois de réaliser dans un avenir
@@ -66,51 +67,111 @@ const legendCategories = mapCategories.filter(
     <li>Apprendre une nouvelle technologie (par exemple, Svelte ou Rust)</li>
   </ul>
   <p>
-    J'ai également l'intention de travailler à l'étranger. Voilà une carte
+    J'ai également l'intention de travailler à l'étranger. Voici une carte
     légendée du monde, indiquant les endroits où j'aimerais travailler.
   </p>
 
-  <section class="map-section">
-    <div class="map-header">
-      <label for="colorFilter">Filtrer par catégorie :</label>
-      <select id="colorFilter">
-        <option value="__all__">Toutes</option>
-        {mapCategories.map((category) => (
-          <option value={category.id}>{category.label}</option>
+  <section class="destinations-wrapper">
+    <section class="map-section">
+      <div class="map-header">
+        <label for="colorFilter">Filtrer par catégorie :</label>
+        <select id="colorFilter">
+          <option value="__all__">Toutes</option>
+          {mapCategories.map((category) => (
+            <option value={category.id}>{category.label}</option>
+          ))}
+        </select>
+      </div>
+
+      <div
+        id="map"
+        class="map-container"
+        aria-label="Carte du monde interactif montrant mes destinations potentielles"
+        data-country-colors={serializedCountryColors}
+        data-country-categories={serializedCountryCategories}
+        data-country-meta={serializedCountryMeta}
+        data-state-colors={serializedStateColors}
+        data-state-categories={serializedStateCategories}
+        data-state-meta={serializedStateMeta}
+        data-category-colors={serializedCategoryColors}
+        data-category-labels={serializedCategoryLabels}
+        data-default-fill-color={defaultFillColor}
+        data-default-category-id={defaultCategoryId}
+      ></div>
+
+      <div class="legend" aria-hidden="false">
+        {legendCategories.map((category) => (
+          <div class="legend-item">
+            <span
+              class="swatch"
+              style={`background:${category.color};`}
+            ></span>
+            <span>{category.label}</span>
+          </div>
         ))}
-      </select>
-    </div>
+        <div class="legend-hint">Survolez une zone pour plus d'infos.</div>
+      </div>
 
-    <div
-      id="map"
-      class="map-container"
-      aria-label="Carte du monde interactif montrant mes destinations potentielles"
-      data-country-colors={serializedCountryColors}
-      data-country-categories={serializedCountryCategories}
-      data-country-explanations={serializedCountryExplanations}
-      data-state-colors={serializedStateColors}
-      data-state-categories={serializedStateCategories}
-      data-state-explanations={serializedStateExplanations}
-      data-category-colors={serializedCategoryColors}
-      data-category-labels={serializedCategoryLabels}
-      data-default-fill-color={defaultFillColor}
-      data-default-category-id={defaultCategoryId}
-    ></div>
+      <div id="hoverPopup" class="hover-popup" role="status" aria-live="polite"></div>
+    </section>
 
-    <div class="legend" aria-hidden="false">
-      {legendCategories.map((category) => (
-        <div class="legend-item">
-          <span
-            class="swatch"
-            style={`background:${category.color};`}
-          ></span>
-          <span>{category.label}</span>
+    <details id="destinationsPanel" class="destinations-panel" data-expanded="false" open>
+      <summary class="destinations-summary">
+        <div class="destinations-summary-text">
+          <span class="destinations-summary-title">Détails par pays</span>
+          <span class="destinations-summary-hint">Triés par catégorie</span>
         </div>
-      ))}
-      <div class="legend-hint">Survolez une zone pour plus d'infos.</div>
-    </div>
-
-    <div id="hoverPopup" class="hover-popup" role="status" aria-live="polite"></div>
+        <span class="destinations-summary-icon" aria-hidden="true"></span>
+      </summary>
+      <div class="destinations-panel__content">
+        <div class="destinations-groups">
+          {countriesByCategory.map(({ category, destinations }) => (
+            <details class="destinations-group" open>
+              <summary class="destinations-group-header">
+                <span
+                  class="destinations-group-swatch"
+                  style={`background:${category.color};`}
+                  aria-hidden="true"
+                ></span>
+                <span class="destinations-group-title">{category.label}</span>
+                <span class="destinations-group-count">
+                  {destinations.length}
+                </span>
+                <span class="destinations-group-toggle" aria-hidden="true"></span>
+              </summary>
+              <ul class="destinations-group-list">
+                {destinations.map((destination) => (
+                  <li class="destinations-item">
+                    <div class="destinations-item-header">
+                      <span class="destinations-flag" aria-hidden="true">
+                        {destination.flagUrl ? (
+                          <img
+                            src={destination.flagUrl}
+                            alt={`Drapeau de ${destination.displayName}`}
+                            width="24"
+                            height="18"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          destination.flag
+                        )}
+                      </span>
+                      <span class="destinations-item-name">{destination.displayName}</span>
+                    </div>
+                    {destination.explanation && (
+                      <span class="destinations-item-explanation">
+                        {destination.explanation}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ))}
+        </div>
+      </div>
+    </details>
   </section>
 
   <link
@@ -123,4 +184,71 @@ const legendCategories = mapCategories.filter(
   ></script>
 
   <script type="module" src={comingMapScript}></script>
+  <script type="module">
+    if (typeof window !== "undefined") {
+      const panel = document.getElementById("destinationsPanel");
+      const mapContainer = document.getElementById("map");
+
+      if (panel instanceof HTMLDetailsElement && mapContainer) {
+        const mq = window.matchMedia("(min-width: 1024px)");
+        const content = panel.querySelector(".destinations-panel__content");
+        const summary = panel.querySelector(".destinations-summary");
+        const resetHeights = () => {
+          panel.style.height = "";
+          panel.style.maxHeight = "";
+          if (content instanceof HTMLElement) {
+            content.style.maxHeight = "";
+          }
+        };
+
+        const adjustHeights = () => {
+          if (!mq.matches) return;
+          const mapHeight = mapContainer.getBoundingClientRect().height;
+          if (!mapHeight) return;
+          const panelHeight = mapHeight * 1.5;
+          panel.style.height = `${panelHeight}px`;
+          panel.style.maxHeight = `${panelHeight}px`;
+          if (content instanceof HTMLElement) {
+            const summaryHeight =
+              summary instanceof HTMLElement ? summary.getBoundingClientRect().height : 0;
+            const maxContentHeight = Math.max(panelHeight - summaryHeight, 150);
+            content.style.maxHeight = `${maxContentHeight}px`;
+          }
+        };
+
+        const scheduleAdjustments = () => {
+          adjustHeights();
+          window.requestAnimationFrame(adjustHeights);
+          window.setTimeout(adjustHeights, 250);
+          window.setTimeout(adjustHeights, 1200);
+        };
+
+        const sync = () => {
+          if (mq.matches) {
+            panel.open = true;
+            panel.dataset.expanded = "true";
+            scheduleAdjustments();
+          } else {
+            panel.open = false;
+            panel.dataset.expanded = "false";
+            resetHeights();
+          }
+        };
+
+        sync();
+        mq.addEventListener("change", sync);
+        panel.addEventListener("toggle", () => {
+          panel.dataset.expanded = panel.open ? "true" : "false";
+        });
+
+        if ("ResizeObserver" in window) {
+          const resizeObserver = new ResizeObserver(scheduleAdjustments);
+          resizeObserver.observe(mapContainer);
+        }
+        window.addEventListener("resize", scheduleAdjustments);
+        window.addEventListener("load", scheduleAdjustments, { once: true });
+        scheduleAdjustments();
+      }
+    }
+  </script>
 </Layout>
