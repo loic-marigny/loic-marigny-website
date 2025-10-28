@@ -102,16 +102,29 @@ const defaultCategoryId = DEFAULT_CATEGORY_ID;
           {countriesByCategory.map(({ category, destinations }) => (
             <details class="destinations-group" data-category-id={category.id}>
               <summary class="destinations-group-header">
-                <span
-                  class="destinations-group-swatch"
-                  style={`background:${category.color};`}
-                  aria-hidden="true"
-                ></span>
-                <span class="destinations-group-title">{category.label}</span>
+                <span class="destinations-group-main">
+                  <span
+                    class="destinations-group-swatch"
+                    style={`background:${category.color};`}
+                    aria-hidden="true"
+                  ></span>
+                  <span class="destinations-group-title">{category.label}</span>
+                </span>
                 <span class="destinations-group-count">
                   {destinations.length}
                 </span>
                 <span class="destinations-group-toggle" aria-hidden="true"></span>
+                <button
+                  type="button"
+                  class="destinations-group-select"
+                  aria-pressed="false"
+                  data-category-id={category.id}
+                  aria-label={`Filtrer par la catégorie ${category.label}`}
+                >
+                  <span class="visually-hidden">
+                    {`Sélectionner ou désélectionner la catégorie ${category.label}`}
+                  </span>
+                </button>
               </summary>
               <ul class="destinations-group-list">
                 {destinations.map((destination) => (

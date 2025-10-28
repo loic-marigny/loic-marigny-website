@@ -126,6 +126,13 @@
   display: none;
 }
 
+.destinations-group-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
 .destinations-group-swatch {
   width: 0.9rem;
   height: 0.9rem;
@@ -139,6 +146,7 @@
 .destinations-group-title {
   font-weight: 600;
   color: #111827;
+  white-space: nowrap;
 }
 
 .destinations-group-count {
@@ -165,10 +173,67 @@
   font-size: 0.85rem;
   transition: transform 160ms ease;
   margin-left: 0.5rem;
+  flex-shrink: 0;
 }
 
 .destinations-group-toggle::before {
   content: "▾";
+}
+
+.destinations-group-select {
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  color: #9ca3af;
+  width: 1.55rem;
+  height: 1.55rem;
+  min-width: 1.55rem;
+  min-height: 1.55rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.35rem;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease,
+    box-shadow 160ms ease;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8);
+}
+
+.destinations-group-select::before {
+  content: "✓";
+  font-size: 0.88rem;
+  font-weight: 600;
+  opacity: 0.35;
+  transform: scale(1);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.destinations-group-select:hover {
+  border-color: #c4cae0;
+  color: #6b7280;
+}
+
+.destinations-group-select[aria-pressed="true"] {
+  background: #243553;
+  color: #fff;
+  border-color: #1f2b44;
+  box-shadow: 0 6px 16px rgb(36 53 83 / 0.18);
+}
+
+.destinations-group-select[aria-pressed="true"]::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.destinations-group-select:focus-visible {
+  outline: 2px solid #243553;
+  outline-offset: 2px;
+}
+
+.destinations-group.is-selected {
+  border-color: #d7ddf5;
+  background: #f6f8ff;
+  box-shadow: 0 8px 22px rgb(36 53 83 / 0.08);
 }
 
 .destinations-group[open] .destinations-group-toggle {
@@ -385,3 +450,4 @@
     display: none;
   }
 }
+

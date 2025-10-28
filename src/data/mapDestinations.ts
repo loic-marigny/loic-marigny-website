@@ -475,7 +475,6 @@ const countryData: CountryEntry[] = [
   ["GTM", "work-conditional", { fr: "Guatemala", en: "Guatemala" }],
   ["HND", "work-conditional", { fr: "Honduras", en: "Honduras" }],
   ["SLV", "work-conditional", { fr: "Salvador", en: "El Salvador" }],
-  ["USA", "work-conditional", { fr: "États-Unis", en: "United States" }],
 
   
   ["111", "situation-unstable", { fr: "Abyei", en: "Abyei" }, { fr: "Zone frontalière disputée entre le Soudan et le Soudan du Sud, tensions récurrentes" }],
@@ -553,7 +552,7 @@ export interface CategorizedCountryGroup {
 const buildDestination = (iso: string, meta: DestinationMeta): CategorizedDestination => {
   const iso2 = isoAlpha2ByAlpha3[iso];
   const flag = meta.flag ?? toFlagEmoji(iso) ?? "🌍";
-  const flagUrl = iso2 ? `https://flagcdn.com/w40/${iso2.toLowerCase()}.png` : undefined;
+  const flagUrl = iso2 ? `https://flagcdn.com/w80/${iso2.toLowerCase()}.png` : undefined;
   return {
     iso,
     iso2,

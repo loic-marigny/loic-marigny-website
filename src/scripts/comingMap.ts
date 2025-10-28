@@ -329,32 +329,34 @@ export default function initComingMap(passedOptions?: ComingMapOptions) {
       );
       if (!groups.length) return;
 
-      let suppressToggle = false;
+      const selectedCategories = new Set<string>();
 
-      const collectActiveCategories = () =>
-        groups
-          .filter((group) => group.open)
-          .map((group) => group.dataset.categoryId ?? "")
-          .filter((id): id is string => id.length > 0);
-
-      const scheduleApply = () => {
-        window.requestAnimationFrame(() => {
-          applyCategoryFilter(collectActiveCategories());
-        });
+      const applyFromSelection = () => {
+        applyCategoryFilter(Array.from(selectedCategories));
       };
 
       groups.forEach((group) => {
-        group.addEventListener("toggle", () => {
-          if (!suppressToggle && group.open) {
-            suppressToggle = true;
-            for (const other of groups) {
-              if (other !== group && other.open) {
-                other.open = false;
-              }
-            }
-            suppressToggle = false;
+        const categoryId = group.dataset.categoryId;
+        if (!categoryId) return;
+        const selectButton = group.querySelector<HTMLButtonElement>(
+          ".destinations-group-select"
+        );
+        if (!selectButton) return;
+
+        selectButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const isSelected = selectedCategories.has(categoryId);
+          if (isSelected) {
+            selectedCategories.delete(categoryId);
+          } else {
+            selectedCategories.add(categoryId);
           }
-          scheduleApply();
+
+          const nextState = !isSelected;
+          selectButton.setAttribute("aria-pressed", nextState ? "true" : "false");
+          group.classList.toggle("is-selected", nextState);
+          applyFromSelection();
         });
       });
     };
