@@ -7,7 +7,7 @@
 
 export const mapCategories: MapCategory[] = [
   { id: "priority", label: "Prioritaire", color: "#8B5CF6" },
-  { id: "strong-interest", label: "Intérêt fort", color: "#075737ff" },
+  { id: "strong-interest", label: "Fort intérêt", color: "#075737ff" },
   { id: "interesting", label: "Intérêt", color: "#0ca953ff" },
   { id: "curiosity", label: "Curiosité", color: "#9ac90dff" },
   {
@@ -17,7 +17,7 @@ export const mapCategories: MapCategory[] = [
   },
   { id: "situation-unstable", label: "Situation instable", color: "#532504ff" },
   { id: "no", label: "Non", color: "#000000" },
-  { id: "france", label: "France", color: "#4B5563", showInLegend: false },
+  { id: "france", label: "France", color: "#243553", showInLegend: false },
   {
     id: "info-missing",
     label: "Informations insuffisantes",
@@ -211,6 +211,8 @@ const isoAlpha2ByAlpha3: Record<string, string> = {
   "PAK": "PK",
   "PLW": "PW",
   "PSE": "PS",
+  "118": "PS",
+  "129": "PS",
   "PAN": "PA",
   "PNG": "PG",
   "PRY": "PY",
