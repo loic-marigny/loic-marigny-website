@@ -32,7 +32,9 @@ import '../styles/interesting.css';
                 <article 
                     class="card" 
                     data-tags={JSON.stringify(card.tags)}
-                    style={card.color ? `background-color: ${card.color};` : ''}
+                    data-width={card.width ? Math.ceil(card.width / 300) : undefined}
+                    style={`${card.color ? `background-color: ${card.color};` : ''}
+                           ${card.width ? `--span-size: ${Math.ceil(card.width / 300)};` : ''}`}
                 >
                     {card.image && (
                         <img 
@@ -94,6 +96,10 @@ import '../styles/interesting.css';
     const selectedTags = new Set<string>();
 
     function updateCards() {
+        const container = document.querySelector('.interesting-container') as HTMLElement;
+        const visibleCards: HTMLElement[] = [];
+        const hiddenCards: HTMLElement[] = [];
+
         cards.forEach(card => {
             const cardTags = JSON.parse(card.getAttribute('data-tags') || '[]');
             const element = card as HTMLElement;
@@ -102,17 +108,31 @@ import '../styles/interesting.css';
             const shouldShow = selectedTags.size === 0 || 
                              cardTags.some((tag: string) => selectedTags.has(tag));
 
-            // Ajouter/retirer la classe hidden avec animation
             if (shouldShow) {
-                element.classList.remove('hidden');
-                // Petite astuce pour décaler légèrement l'animation de chaque carte
-                setTimeout(() => {
-                    element.style.transform = '';
-                    element.style.opacity = '1';
-                }, 50);
+                visibleCards.push(element);
             } else {
-                element.classList.add('hidden');
+                hiddenCards.push(element);
             }
+        });
+
+        // Animation de sortie pour les cartes cachées
+        hiddenCards.forEach(card => {
+            card.style.gridRow = '1';
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                card.style.display = 'none';
+            }, 300);
+        });
+
+        // Animation d'entrée pour les cartes visibles
+        visibleCards.forEach((card, index) => {
+            card.style.display = 'flex';
+            card.style.gridRow = 'auto';
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+            }, index * 50); // Effet cascade
         });
     }
 

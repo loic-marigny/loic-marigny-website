@@ -31,6 +31,7 @@ export const cards: Card[] = [
         id: 'inception',
         title: 'Inception',
         description: 'Un film de Christopher Nolan qui explore les profondeurs du rêve. Une réflexion fascinante sur la nature de la réalité et des rêves.',
+        width: 800,
         image: '/interesting/inception.jpg',
         tags: ['movie'],
         embedUrl: 'https://www.youtube.com/embed/YoHD9XEInc0',

@@ -1,16 +1,31 @@
 .interesting-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    padding: 2rem;
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 200px;
+}
+
+.card[data-width] {
+    grid-column: auto / span var(--span-size, 1);
+}
+
+/* Style du conteneur principal */
+main {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .tag-filters {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    padding: 1rem 2rem;
+    padding: 1rem;
     margin-bottom: 1rem;
+    max-width: 1400px;
+    margin: 0 auto 1rem;
 }
 
 .tag-filter {
@@ -23,6 +38,8 @@
     position: relative;
     opacity: 0.75;
     transform: translateY(0);
+    font-family: inherit;
+    font-size: 1rem;
 }
 
 .tag-filter:hover {
@@ -49,7 +66,7 @@
 }
 
 .card {
-    background: var(--color-card-dark, #1a1a1a);
+    background: #e9e5d5;
     border-radius: 1rem;
     padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -59,6 +76,7 @@
     gap: 1rem;
     transform: translateY(0) scale(1);
     opacity: 1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .card:hover {
