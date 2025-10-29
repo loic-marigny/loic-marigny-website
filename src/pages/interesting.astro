@@ -1,7 +1,146 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { tags, cards } from '../data/interesting';
+import '../styles/interesting.css';
 ---
 
-<Layout title="Interesting stuff" description="Various things I like to show people".>
-  <h1>Interesting</h1>
+<Layout title="Interesting stuff" description="Various things I like to show people">
+    <main>
+        <h1>Mes Recommendations</h1>
+        
+        <div class="tag-filters" id="tagFilters">
+            <button 
+                class="tag-filter active" 
+                data-tag="all" 
+                style="background-color: #808080; color: white;"
+            >
+                Tous
+            </button>
+            {tags.map(tag => (
+                <button 
+                    class="tag-filter" 
+                    data-tag={tag.id}
+                    style={`background-color: ${tag.color}; color: white;`}
+                >
+                    {tag.name}
+                </button>
+            ))}
+        </div>
+
+        <div class="interesting-container" id="cardsContainer">
+            {cards.map(card => (
+                <article 
+                    class="card" 
+                    data-tags={JSON.stringify(card.tags)}
+                    style={card.color ? `background-color: ${card.color};` : ''}
+                >
+                    {card.image && (
+                        <img 
+                            src={card.image} 
+                            alt={card.title} 
+                            class="card-image"
+                            style={`height: ${card.height || 200}px;`}
+                        />
+                    )}
+                    
+                    {card.embedUrl && (
+                        <div class="embed-container">
+                            {card.embedType === 'youtube' ? (
+                                <iframe 
+                                    src={card.embedUrl}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen
+                                ></iframe>
+                            ) : (
+                                <iframe 
+                                    src={card.embedUrl}
+                                    allow="encrypted-media; picture-in-picture"
+                                    allowfullscreen
+                                ></iframe>
+                            )}
+                        </div>
+                    )}
+
+                    <h3 class="text-xl font-bold mb-2">{card.title}</h3>
+                    <p class="text-gray-200">{card.description}</p>
+                    {card.quote && (
+                        <blockquote class="quote">
+                            "{card.quote}"
+                        </blockquote>
+                    )}
+
+                    <div class="card-tags mt-auto">
+                        {card.tags.map(tagId => {
+                            const tag = tags.find(t => t.id === tagId);
+                            return tag && (
+                                <span 
+                                    class="card-tag"
+                                    style={`background-color: ${tag.color}; color: white;`}
+                                >
+                                    {tag.name}
+                                </span>
+                            );
+                        })}
+                    </div>
+                </article>
+            ))}
+        </div>
+    </main>
 </Layout>
+
+<script>
+    const tagFilters = document.querySelectorAll('.tag-filter');
+    const cards = document.querySelectorAll('.card');
+    const selectedTags = new Set<string>();
+
+    function updateCards() {
+        cards.forEach(card => {
+            const cardTags = JSON.parse(card.getAttribute('data-tags') || '[]');
+            const element = card as HTMLElement;
+            
+            // Si aucun tag n'est sélectionné ou si la carte a au moins un des tags sélectionnés
+            const shouldShow = selectedTags.size === 0 || 
+                             cardTags.some((tag: string) => selectedTags.has(tag));
+
+            // Ajouter/retirer la classe hidden avec animation
+            if (shouldShow) {
+                element.classList.remove('hidden');
+                // Petite astuce pour décaler légèrement l'animation de chaque carte
+                setTimeout(() => {
+                    element.style.transform = '';
+                    element.style.opacity = '1';
+                }, 50);
+            } else {
+                element.classList.add('hidden');
+            }
+        });
+    }
+
+    tagFilters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            const tag = filter.getAttribute('data-tag');
+            if (!tag) return;
+
+            if (tag === 'all') {
+                // Réinitialiser tous les filtres
+                selectedTags.clear();
+                tagFilters.forEach(f => f.classList.remove('active'));
+                filter.classList.add('active');
+            } else {
+                // Retirer le filtre "Tous" s'il est actif
+                document.querySelector('[data-tag="all"]')?.classList.remove('active');
+
+                // Basculer l'état du tag
+                if (selectedTags.has(tag)) {
+                    selectedTags.delete(tag);
+                    filter.classList.remove('active');
+                } else {
+                    selectedTags.add(tag);
+                    filter.classList.add('active');
+                }
+            }
+
+            updateCards();
+        });
+    });
+</script>
