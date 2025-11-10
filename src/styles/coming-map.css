@@ -1,23 +1,22 @@
 .destinations-wrapper {
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  gap: 1.5rem;
-  margin: 2rem 0;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin: 0 0;
 }
 
 .destinations-panel {
   position: relative;
-  flex: 0 0 320px;
-  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 300px;
+  max-width: 340px;
+  height: auto;
+  max-height: none;
   border: 1px solid #e5e7eb;
   border-radius: 1rem;
   background: #fff;
   box-shadow: 0 10px 30px rgb(0 0 0 / 0.07);
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  max-height: none;
   overflow: hidden;
 }
 
@@ -29,9 +28,9 @@
   padding: 0.95rem 1.1rem;
   font-weight: 600;
   font-size: 0.95rem;
-  cursor: pointer;
-  list-style: none;
   color: #1f2937;
+  list-style: none;
+  cursor: pointer;
   background: linear-gradient(180deg, rgba(249, 250, 251, 0.95), #ffffff);
 }
 
@@ -51,25 +50,30 @@
 
 .destinations-summary-hint {
   font-size: 0.75rem;
-  color: #6b7280;
   letter-spacing: 0.01em;
+  color: #6b7280;
 }
 
 .destinations-summary-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
   background: #f3f4f6;
   color: #1f2937;
   transition: transform 160ms ease;
 }
 
 .destinations-summary-icon::before {
-  content: "▾";
-  font-size: 0.9rem;
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 0.3rem solid transparent;
+  border-right: 0.3rem solid transparent;
+  border-top: 0.38rem solid currentColor;
 }
 
 .destinations-panel[data-expanded="true"] .destinations-summary-icon {
@@ -79,8 +83,8 @@
 .destinations-panel__content {
   padding: 1.2rem 1.1rem 1.4rem;
   border-top: 1px solid #e5e7eb;
-  overflow-y: auto;
   flex: 1 1 auto;
+  overflow-y: auto;
   scrollbar-width: thin;
 }
 
@@ -89,8 +93,8 @@
 }
 
 .destinations-panel__content::-webkit-scrollbar-thumb {
-  background: #d1d5db;
   border-radius: 999px;
+  background: #d1d5db;
 }
 
 .destinations-groups {
@@ -102,11 +106,12 @@
 .destinations-group {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  padding: 0.35rem 0.75rem;
   border: 1px solid #f3f4f6;
   border-radius: 0.85rem;
   background: #fbfbfb;
-  padding: 0.35rem 0.75rem;
-  transition: border-color 120ms ease;
+  transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
 }
 
 .destinations-group[open] {
@@ -117,9 +122,10 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
+  padding: 0.4rem 0;
   cursor: pointer;
   list-style: none;
-  padding: 0.4rem 0;
+  width: 100%;
 }
 
 .destinations-group > summary::-webkit-details-marker {
@@ -130,6 +136,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -138,74 +145,87 @@
   height: 0.9rem;
   min-width: 0.9rem;
   min-height: 0.9rem;
-  border-radius: 50%;
   border: 1px solid #e5e7eb;
+  border-radius: 50%;
   box-shadow: 0 2px 6px rgb(0 0 0 / 0.08);
 }
 
 .destinations-group-title {
   font-weight: 600;
   color: #111827;
-  white-space: nowrap;
+  white-space: normal;
+}
+
+.destinations-group-count,
+.destinations-group-toggle,
+.destinations-group-select {
+  align-self: center;
+  margin-left: 0;
 }
 
 .destinations-group-count {
   margin-left: auto;
+  padding: 0.15rem 0.5rem;
   font-size: 0.75rem;
   font-weight: 600;
   color: #6b7280;
-  background: #f3f4f6;
   border-radius: 999px;
-  padding: 0.15rem 0.5rem;
+  background: #f3f4f6;
 }
 
 .destinations-group-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 1.4rem;
   height: 1.4rem;
   min-width: 1.4rem;
   min-height: 1.4rem;
   border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   background: #eef0f4;
   color: #111827;
-  font-size: 0.85rem;
   transition: transform 160ms ease;
-  margin-left: 0.5rem;
   flex-shrink: 0;
 }
 
 .destinations-group-toggle::before {
-  content: "▾";
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 0.26rem solid transparent;
+  border-right: 0.26rem solid transparent;
+  border-top: 0.32rem solid currentColor;
 }
 
 .destinations-group-select {
-  border: 1px solid #d1d5db;
-  background: #f9fafb;
-  color: #9ca3af;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 1.55rem;
   height: 1.55rem;
   min-width: 1.55rem;
   min-height: 1.55rem;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   margin-left: 0.35rem;
-  transition: background 160ms ease, border-color 160ms ease, color 160ms ease,
-    box-shadow 160ms ease;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #f9fafb;
+  color: #9ca3af;
   cursor: pointer;
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8);
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
 }
 
 .destinations-group-select::before {
-  content: "✓";
-  font-size: 0.88rem;
-  font-weight: 600;
+  content: "";
+  display: block;
+  width: 0.36rem;
+  height: 0.65rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) scale(0.9);
   opacity: 0.35;
-  transform: scale(1);
-  transition: opacity 160ms ease, transform 160ms ease;
+  transition: opacity 160ms ease;
 }
 
 .destinations-group-select:hover {
@@ -214,15 +234,14 @@
 }
 
 .destinations-group-select[aria-pressed="true"] {
-  background: #243553;
-  color: #fff;
   border-color: #1f2b44;
+  background: #243553;
+  color: #ffffff;
   box-shadow: 0 6px 16px rgb(36 53 83 / 0.18);
 }
 
 .destinations-group-select[aria-pressed="true"]::before {
   opacity: 1;
-  transform: scale(1);
 }
 
 .destinations-group-select:focus-visible {
@@ -241,12 +260,12 @@
 }
 
 .destinations-group-list {
-  list-style: none;
-  margin: 0;
-  padding: 0 0 0.35rem;
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
+  padding: 0 0 0.35rem;
+  margin: 0;
+  list-style: none;
 }
 
 .destinations-group[open] .destinations-group-list {
@@ -257,9 +276,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  padding: 0.65rem 0.75rem;
   border: 1px solid #f3f4f6;
   border-radius: 0.75rem;
-  padding: 0.65rem 0.75rem;
   background: #fafafa;
 }
 
@@ -274,17 +293,17 @@
 }
 
 .destinations-flag {
-  font-size: 1.4rem;
-  line-height: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 1.4rem;
-  min-width: 1.4rem;
   height: 1.05rem;
+  min-width: 1.4rem;
   min-height: 1.05rem;
   border-radius: 0.25rem;
   overflow: hidden;
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
 .destinations-flag img {
@@ -295,34 +314,34 @@
 }
 
 .destinations-item-name {
-  font-weight: 600;
-  color: #1f2937;
-  font-size: 0.92rem;
   display: inline-flex;
   align-items: center;
   height: 1.05rem;
   line-height: 1.05rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #1f2937;
 }
 
 .destinations-item-explanation {
   font-size: 0.78rem;
-  color: #4b5563;
   line-height: 1.35;
+  color: #4b5563;
 }
 
 .map-section {
   position: relative;
-  max-width: none;
-  margin: 0;
-  border: 1px solid #e5e7eb;
-  border-radius: 1rem;
-  padding: 1rem;
-  background: #fff;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.07);
-  flex: 1 1 0;
-  min-width: 0;
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  margin: 0;
+  max-width: none;
+  padding: 0.75rem;
+  min-width: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.07);
 }
 
 .map-header {
@@ -330,20 +349,19 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
   margin-bottom: 0.75rem;
+  font-size: 0.9rem;
 }
 
 .map-container {
+  position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  min-height: 400px;
+  min-height: 420px;
   border-radius: 0.75rem;
   overflow: hidden;
-  position: relative;
+  flex: 1 1 auto;
 }
 
-/* Remove focus rings injected by MapLibre on the canvas */
 .map-container .maplibregl-canvas {
   outline: none;
 }
@@ -353,10 +371,10 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem 1.25rem;
+  margin-top: 0.75rem;
   font-size: 0.8rem;
   line-height: 1.2;
   color: #374151;
-  margin-top: 0.75rem;
 }
 
 .legend-item {
@@ -368,8 +386,8 @@
 .swatch {
   width: 14px;
   height: 14px;
-  border-radius: 4px;
   border: 1px solid #00000022;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
@@ -380,20 +398,20 @@
 
 .hover-popup {
   position: absolute;
-  pointer-events: none;
-  background: rgba(17, 24, 39, 0.9);
-  color: #fff;
-  padding: 0.5rem 0.6rem;
-  font-size: 0.75rem;
-  line-height: 1.2;
-  border-radius: 0.5rem;
-  box-shadow: 0 10px 20px rgb(0 0 0 / 0.3);
+  z-index: 20;
   min-width: 120px;
   max-width: 220px;
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.5rem;
+  background: rgba(17, 24, 39, 0.9);
+  color: #ffffff;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 0.3);
+  pointer-events: none;
   opacity: 0;
   transform: translate(-50%, calc(-100% - 8px));
   transition: opacity 120ms ease;
-  z-index: 20;
 }
 
 .hover-popup .popup-explanation {
@@ -422,9 +440,9 @@
 
   .destinations-panel {
     flex: 1 1 auto;
+    order: -1;
     width: 100%;
     max-width: none;
-    order: -1;
     height: auto;
     max-height: none;
   }
@@ -442,6 +460,21 @@
 }
 
 @media (min-width: 1024px) {
+  .destinations-wrapper {
+    align-items: stretch;
+    --column-height: clamp(540px, calc(100vh - 200px), 900px);
+  }
+
+  .destinations-panel {
+    height: var(--column-height);
+    max-height: var(--column-height);
+  }
+
+  .destinations-panel__content {
+    overflow-y: auto;
+    min-height: 0;
+  }
+
   .destinations-summary {
     cursor: default;
   }
@@ -449,5 +482,16 @@
   .destinations-summary-icon {
     display: none;
   }
-}
 
+  .map-section {
+    display: flex;
+    flex-direction: column;
+    height: var(--column-height);
+    max-height: var(--column-height);
+  }
+
+  .map-container {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+}

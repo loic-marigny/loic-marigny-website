@@ -12,7 +12,7 @@ export const mapCategories: MapCategory[] = [
   { id: "curiosity", label: "Curiosité", color: "#9ac90dff" },
   {
     id: "work-conditional",
-    label: "En fonction du travail proposé",
+    label: "En fonction du travail",
     color: "#ef4444"
   },
   { id: "situation-unstable", label: "Situation instable", color: "#532504ff" },
@@ -359,7 +359,6 @@ const countryData: CountryEntry[] = [
   
   ["CMR", "interesting", { fr: "Cameroun", en: "Cameroon" }],
   ["CHN", "interesting", { fr: "Chine", en: "China" }, { fr: "Nouveau centre du monde, pays en pleine transformation, richesse culturelle millénaire" }],
-  ["ARE", "interesting", { fr: "Émirats arabes unis", en: "United Arab Emirates" }],
   ["KAZ", "interesting", { fr: "Kazakhstan", en: "Kazakhstan" }],
   ["TUR", "interesting", { fr: "Turquie", en: "Turkey" }, { fr: "Pays au carrefour de l'Europe et de l'Asie, riche histoire, culture vibrante, fort potentiel économique" }],
   ["GBR", "interesting", { fr: "Royaume-Uni", en: "United Kingdom" }, { fr: "Patrimoine historique et culturel exceptionnel, comparable à la France, influence internationale majeure" }],
@@ -444,6 +443,7 @@ const countryData: CountryEntry[] = [
 
   ["PRY", "work-conditional", { fr: "Paraguay", en: "Paraguay" }],
   ["QAT", "work-conditional", { fr: "Qatar", en: "Qatar" }, { fr: "Pays riche en développement rapide mais régime autoritaire répressif. Droits humains bafoués, ingérences à l'international." }],
+  ["ARE", "work-conditional", { fr: "Émirats arabes unis", en: "United Arab Emirates" }, { fr: "Droits humains inquiétés, responsabilité dans la situation au Soudan." }],
   ["BEL", "work-conditional", { fr: "Belgique", en: "Belgium" }, { fr: "Intérêt d'une expérience professionnelle limité par rapport à la France" }],
   ["AND", "work-conditional", { fr: "Andorre", en: "Andorra" }],
   ["HUN", "work-conditional", { fr: "Hongrie", en: "Hungary" }, { fr: "Histoire riche et fascinante mais pays en dérive autoritaire inquiétante. Droits humains inquiétés." }],
@@ -487,7 +487,18 @@ const countryData: CountryEntry[] = [
   ["119", "situation-unstable", { fr: "Kalapani", en: "Kalapani" }, { fr: "Zone frontalière disputée entre l'Inde et le Népal" }],
   ["121", "situation-unstable", { fr: "Siachen-Saltoro", en: "Siachen-Saltoro" }, { fr: "Zone disputée entre l'Inde et le Pakistan, tensions militaires fréquentes, conditions de vie difficiles" }],
   ["129", "situation-unstable", { fr: "Cisjordanie", en: "West Bank" }, { fr: "Territoire à haut risque en raison de la colonisation illégale permise par le gouvernement israélien." }],
-  
+  ["115", "situation-unstable", { fr: "Dragonja", en: "Dragonja" }, { fr: "Litige frontalier entre la Slovénie et la Croatie, tensions politiques récurrentes." }],
+  ["116", "situation-unstable", { fr: "Dramana-Shakatoe", en: "Dramana-Shakatoe" }, { fr: "Litige frontalier entre le Burkina Faso et le Ghana, présence militaire périodique." }],
+  ["117", "situation-unstable", { fr: "Îles Malouines", en: "Falkland Islands" }, { fr: "Territoire disputé entre le Royaume-Uni et l'Argentine, tensions diplomatiques persistantes." }],
+  ["120", "situation-unstable", { fr: "Isla Brasilera", en: "Isla Brasilera" }, { fr: "Petit territoire contesté entre l'Argentine et l'Uruguay, souveraineté non tranchée." }],
+  ["122", "situation-unstable", { fr: "Koualou", en: "Koualou" }, { fr: "Zone contestée entre le Bénin et le Burkina Faso, gouvernance ambiguë." }],
+  ["123", "situation-unstable", { fr: "Rochers Liancourt", en: "Liancourt Rocks" }, { fr: "Îlots disputés entre le Japon et la Corée du Sud, présence permanente de garde-côtes." }],
+  ["124", "situation-unstable", { fr: "No Man's Land", en: "No Man's Land" }, { fr: "Zone tampon entre l'Égypte et le Soudan, absence d'autorité reconnue." }],
+  ["125", "situation-unstable", { fr: "Îles Paracels", en: "Paracel Islands" }, { fr: "Archipel hautement stratégique disputé entre la Chine et le Vietnam." }],
+  ["126", "situation-unstable", { fr: "Îles Tiran et Sanafir", en: "Tiran & Sanafir Islands" }, { fr: "Îles contestées transférées par l'Égypte à l'Arabie saoudite, contestation locale persistante." }],
+  ["127", "situation-unstable", { fr: "Îles Senkaku", en: "Senkaku Islands" }, { fr: "Archipel disputé entre le Japon, la Chine et Taïwan, tensions navales fréquentes." }],
+  ["128", "situation-unstable", { fr: "Îles Spratleys", en: "Spratly Islands" }, { fr: "Archipel disputé par plusieurs pays d'Asie du Sud-Est, militarisation rapide." }],
+
   ["ARM", "situation-unstable", { fr: "Arménie", en: "Armenia" }, { fr: "Tensions régionales persistantes, instabilité politique occasionnelle, économie fragile" }],
   ["AZE", "situation-unstable", { fr: "Azerbaïdjan", en: "Azerbaijan" }, { fr: "Conflit territorial non résolu, tensions régionales élevées, gouvernance autoritaire" }],
   ["BFA", "situation-unstable", { fr: "Burkina Faso", en: "Burkina Faso" }, { fr: "Insécurité croissante due aux groupes armés, instabilité politique, pauvreté généralisée" }],
@@ -515,6 +526,36 @@ const countryData: CountryEntry[] = [
   ["SYR", "no", { fr: "Syrie", en: "Syria" }, { fr: "Guerre civile dévastatrice, crise humanitaire majeure, instabilité politique chronique" }],
   ["IRQ", "no", { fr: "Irak", en: "Iraq" }, { fr: "Instabilité politique chronique, menaces terroristes, tensions sectaires élevées" }],
   ["AFG", "no", { fr: "Afghanistan", en: "Afghanistan" }, { fr: "Conflits armés persistants, instabilité politique, risques sécuritaires élevés, droits humains bafoués" }],
+
+  ["ATA", "info-missing", { fr: "Antarctique", en: "Antarctica" }],
+  ["ATG", "info-missing", { fr: "Antigua-et-Barbuda", en: "Antigua and Barbuda" }],
+  ["BGD", "info-missing", { fr: "Bangladesh", en: "Bangladesh" }],
+  ["BHR", "info-missing", { fr: "Bahreïn", en: "Bahrain" }],
+  ["BLZ", "info-missing", { fr: "Belize", en: "Belize" }],
+  ["BRB", "info-missing", { fr: "Barbade", en: "Barbados" }],
+  ["BRN", "info-missing", { fr: "Brunei", en: "Brunei" }],
+  ["CPV", "info-missing", { fr: "Cap-Vert", en: "Cabo Verde" }],
+  ["DJI", "info-missing", { fr: "Djibouti", en: "Djibouti" }],
+  ["DMA", "info-missing", { fr: "Dominique", en: "Dominica" }],
+  ["ECU", "info-missing", { fr: "Équateur", en: "Ecuador" }],
+  ["FSM", "info-missing", { fr: "États fédérés de Micronésie", en: "Micronesia" }],
+  ["GRD", "info-missing", { fr: "Grenade", en: "Grenada" }],
+  ["KIR", "info-missing", { fr: "Kiribati", en: "Kiribati" }],
+  ["KNA", "info-missing", { fr: "Saint-Christophe-et-Niévès", en: "Saint Kitts and Nevis" }],
+  ["LCA", "info-missing", { fr: "Sainte-Lucie", en: "Saint Lucia" }],
+  ["MCO", "info-missing", { fr: "Monaco", en: "Monaco" }],
+  ["MHL", "info-missing", { fr: "Îles Marshall", en: "Marshall Islands" }],
+  ["NIC", "info-missing", { fr: "Nicaragua", en: "Nicaragua" }],
+  ["PLW", "info-missing", { fr: "Palaos", en: "Palau" }],
+  ["SMR", "info-missing", { fr: "Saint-Marin", en: "San Marino" }],
+  ["SUR", "info-missing", { fr: "Suriname", en: "Suriname" }],
+  ["TLS", "info-missing", { fr: "Timor oriental", en: "Timor-Leste" }],
+  ["TON", "info-missing", { fr: "Tonga", en: "Tonga" }],
+  ["TTO", "info-missing", { fr: "Trinité-et-Tobago", en: "Trinidad and Tobago" }],
+  ["USA", "info-missing", { fr: "États-Unis", en: "United States" }, { fr: "Voir les États individuels pour les préférences détaillées." }],
+  ["VAT", "info-missing", { fr: "Vatican", en: "Vatican City" }],
+  ["VCT", "info-missing", { fr: "Saint-Vincent-et-les-Grenadines", en: "Saint Vincent and the Grenadines" }],
+  ["WSM", "info-missing", { fr: "Samoa", en: "Samoa" }]
 ] as const;
 
 export const countryMeta = Object.fromEntries(

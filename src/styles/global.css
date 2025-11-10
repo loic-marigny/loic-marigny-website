@@ -37,6 +37,10 @@ body {
   min-height: 100svh; /* viewport-safe */
 }
 
+main {
+  margin-top: 0;
+}
+
 /* Links */
 a {
   color: var(--brand);
@@ -306,14 +310,14 @@ a:hover {
 main {
   flex: 1;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 0 20px;
   padding: 1.5rem 2rem;
 }
 
 /* Typography */
 h1, h2, h3 {
   line-height: 1.2;
-  margin: 1.2em 0 0.4em;
+  margin: 0.5rem 0 0.4em;  /* Un petit espacement uniforme en haut */
 }
 p {
   margin: 0.8em 0;

@@ -15,17 +15,15 @@
 /* Style du conteneur principal */
 main {
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Évite le scroll horizontal pendant les animations */
 }
 
 .tag-filters {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    padding: 1rem;
+    padding: 1rem 2rem;
     margin-bottom: 1rem;
-    max-width: 1400px;
-    margin: 0 auto 1rem;
 }
 
 .tag-filter {
@@ -58,11 +56,16 @@ main {
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.2em;
-    transition: transform 0.3s ease;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .tag-filter.active:hover::after {
-    transform: translateY(-50%) rotate(90deg);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .card {
