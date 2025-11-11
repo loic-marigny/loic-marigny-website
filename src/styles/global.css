@@ -1,4 +1,5 @@
 /* src/styles/global.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
 
 /* ===============================
    Color variables
@@ -326,10 +327,13 @@ h1, h2, h3, h4 {
 
 /* H1 : centrés + majuscules */
 h1 {
+  font-family: "Playfair Display", serif; /* nouvelle police pour les H1 */
   font-size: clamp(2.2rem, 5vw, 3.4rem);
   text-align: center;
-  text-transform: uppercase;    /* CAPS LOCK */
-  letter-spacing: 0.12em;       /* espace entre les lettres */
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--sand);           /* teinte douce sur fond sombre */
+  text-shadow: 0 3px 8px rgba(0,0,0,0.5); /* effet lisible sur image */
 }
 
 /* Autres titres : alignés à gauche avec "alinéa" */
@@ -353,6 +357,20 @@ h4 {
   font-size: clamp(1.2rem, 2.4vw, 1.5rem);
   margin-top: 1rem;
   font-weight: 500;
+}
+
+/* Liens à l'intérieur des titres (ex: h2 cliquables) */
+h1 a, h2 a, h3 a, h4 a {
+  color: inherit;              /* garde la couleur du titre parent */
+  text-decoration: none;       /* enlève le soulignement */
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Effet au survol (optionnel et doux) */
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover {
+  opacity: 0.85;
+  transform: translateY(-1px); /* petit effet de relief */
+  text-decoration: none;       /* évite le soulignement au hover */
 }
 
 /* Animation d'apparition des titres */
@@ -574,6 +592,10 @@ footer {
 
 
 /* Images d'arrière-plan pour chaque couche */
+.page-bg-layer.bg0 {
+  background-image: url("/education/dead-poets-society.jpeg");
+}
+
 .page-bg-layer.bg1 {
   background-image: url("/education/pulv.jpg");
 }
@@ -586,4 +608,7 @@ footer {
   background-image: url("/education/lrb-4.webp");
 }
 
+.bg-part:first-of-type {
+  min-height: 72vh;     /* au lieu de 100vh */
+}
 

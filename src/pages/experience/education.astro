@@ -5,17 +5,24 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title="Education" description="Educational background and qualifications.">
   <!-- Fond plein écran avec 3 images -->
   <div class="page-bg">
+    <div class="page-bg-layer bg0" data-bg="0"></div>
     <div class="page-bg-layer bg1" data-bg="1"></div>
     <div class="page-bg-layer bg2" data-bg="2"></div>
     <div class="page-bg-layer bg3" data-bg="3"></div>
   </div>
   
+  <section class="bg-part" data-bg="0">
+    <h1>éducation</h1>
+  </section>
   <section class="bg-part" data-bg="1">
-    <h1>Mon parcours éducatif</h1>
-    <h2>ESILV</h2>
+    <h2><a href="https://www.esilv.fr/" target="_blank">ESILV — La Défense</a></h2>
     <div class="school-row">
-      <img src="/education/logo-esilv.jpg" class="school-pole-img">
-      <img src="/education/logo-pulv.jpg" class="school-pole-img">
+      <a href="https://www.esilv.fr/">
+        <img src="/education/logo-esilv.jpg" class="school-pole-img">
+      </a>
+      <a href="https://www.devinci.fr/">
+        <img src="/education/logo-pulv.jpg" class="school-pole-img">
+      </a>
     </div>
     <p>J'ai effectué mes études supérieurs à l'École Supérieure d'Ingénieurs Léonard de Vinci, à la Défense.</br>
     J'y ai suivi un cursus généraliste, avec une attention particulière portée aux sciences informatiques. L'école est intégrée au Pôle Universitaire
@@ -36,14 +43,16 @@ import Layout from "../../layouts/Layout.astro";
   </section>
 
   <section class="bg-part" data-bg="2">
-    <h2>Riga Technical University</h2>
-    <img src="/education/rtu-logo.png" class="school-img">
+    <h2><a href="https://www.rtu.lv/en" target="_blank">Riga Technical University</a></h2>
+    <a href="https://www.rtu.lv/en">
+      <img src="/education/rtu-logo.png" class="school-img">
+    </a>
     <h4>Semestre à l'étranger</h4>
     <p>J'ai eu la chance de pouvoir effectuer un semestre à la Riga Technical University, de septembre 2025 à janvier 2026. Ce semestre a été l'occasion
       de m'immerger dans un environnement international, et donc de pratiquer les langues anglaise et russe au quotidien.
     </p>
     <h4>Entre sciences sociales et informatique</h4>
-    <p>Pour ce semestre, j'ai pu choisir des cours que j'ai jugés profondément importants pour mon développement personnel ; International Economy, 
+    <p>Pour ce semestre, j'ai pu choisir des cours profondément importants pour mon développement personnel ; International Economy, 
       Rhetorics, Political Philosophy. J'ai également choisi des cours importants dans l'immédiat pour mes activités professionnelles ; Natural Language
       Processing, Machine Learning, Advanced Data Processing Techniques, AI in Humanities.
     </p>
@@ -55,9 +64,11 @@ import Layout from "../../layouts/Layout.astro";
   </section>
 
   <section class="bg-part" data-bg="3">
-    <h2>Lycée Rémi Belleau</h2>
-    <img src="/education/lrb-3.webp" class="school-img">
-    <p>J'ai obtenu mon baccalauréat au lycée <a href="https://www.remibelleau.fr/" target="_blank">Rémi Belleau</a> de Nogent le Rotrou. J'avais choisi les spécialités Mathématiques et Physique, je faisais partie
+    <h2><a href="https://www.remibelleau.fr/" target="_blank">Lycée Rémi Belleau</a></h2>
+    <a href="https://www.remibelleau.fr/">
+      <img src="/education/lrb-3.webp" class="school-img">
+    </a>
+    <p>J'ai obtenu mon baccalauréat au lycée Rémi Belleau de Nogent le Rotrou. J'avais choisi les spécialités Mathématiques et Physique, je faisais partie
       de la section européenne (qui assistait à des cours d'histoire-géographie en anglais), et je suivais également l'option Mathématiques Expertes. 
       Baccalauréat obtenu avec mention très bien en 2021.</p>
     <p>C'est à ce lycée que j'ai pris goût à la philosophie, l'histoire et aux sciences dures, grâce à un environnement d'une bienveillance unique et des 
