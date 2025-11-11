@@ -3,39 +3,96 @@ import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="Education" description="Educational background and qualifications.">
-  <h1>Mon parcours éducatif</h1>
-  <h2>ESILV</h2>
-  <p>J'ai effectué mes études supérieurs à l'École Supérieure d'Ingénieurs Léonard de Vinci, à la Défense.</br>
-  J'y ai suivi un cursus généraliste, avec une attention particulière portée aux sciences informatiques. L'école est intégrée au Pôle Universitaire
-  Léonard de Vinci, regroupant une école d'ingénieurs, une école de commerce et une école du numérique. Cela m'a permis de développer mes compétences
-  interdisciplinaires et interpersonnelles de manière beaucoup plus efficace. </p>
-  <h4>Soft skills</h4>
-  <p>Le Pôle Léonard de Vinci tient particulièrement à mettre en avant les soft skills dans la formation ; c'est ainsi que j'ai pu suivre des cours de 
-  communication interpersonnelle avancés, basés sur les théories MBTI, des cours de gestion de projet avec un focus particulier sur le temps,
-  (https://www.youtube.com/watch?v=SqGRnlXplx0) et des cours de prise de parole en public.
-  </p>
-  <h4>Énergies et Villes Durables</h4>
-  <p>Après les deux années de prépa intégrée et une année de cycle licence généraliste, j'ai poursuivi mon cursus dans la majeure Énergies et Villes
-  Durables.
-  </p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/B-obf8Uingo?si=fWND_m_nCHmk-uqZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  <!-- Fond plein écran avec 3 images -->
+  <div class="page-bg">
+    <div class="page-bg-layer bg1" data-bg="1"></div>
+    <div class="page-bg-layer bg2" data-bg="2"></div>
+    <div class="page-bg-layer bg3" data-bg="3"></div>
+  </div>
+  
+  <section class="bg-part" data-bg="1">
+    <h1>Mon parcours éducatif</h1>
+    <h2>ESILV</h2>
+    <div class="school-row">
+      <img src="/education/logo-esilv.jpg" class="school-pole-img">
+      <img src="/education/logo-pulv.jpg" class="school-pole-img">
+    </div>
+    <p>J'ai effectué mes études supérieurs à l'École Supérieure d'Ingénieurs Léonard de Vinci, à la Défense.</br>
+    J'y ai suivi un cursus généraliste, avec une attention particulière portée aux sciences informatiques. L'école est intégrée au Pôle Universitaire
+    Léonard de Vinci, regroupant une école d'ingénieurs, une école de commerce et une école du numérique. Cela m'a permis de développer mes compétences
+    interdisciplinaires et interpersonnelles de manière beaucoup plus efficace. </p>
+    <h4>Soft skills</h4>
+    <p>Le Pôle Léonard de Vinci tient particulièrement à mettre en avant les soft skills dans la formation ; c'est ainsi que j'ai pu suivre des cours de 
+    communication interpersonnelle avancés, basés sur les théories MBTI, des cours de gestion de projet avec un focus particulier sur le temps,
+    (https://www.youtube.com/watch?v=SqGRnlXplx0) et des cours de prise de parole en public.
+    </p>
+    <h4>Énergies et Villes Durables</h4>
+    <p>Après les deux années de prépa intégrée et une année de cycle licence généraliste, j'ai poursuivi mon cursus dans la majeure Énergies et Villes
+    Durables. En mettant la transition écologique au coeur de mon parcours, j'espère pouvoir contribuer à mon échelle aux transformations nécessaires à 
+    notre société. J'y ai suivi des cours sur les différents types d'énergie (solaire, hydraulique, éolienne, nucléaire), de sobriété, d'isolation et 
+    d'optimisation énergétique.
+    </p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/B-obf8Uingo?si=fWND_m_nCHmk-uqZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </section>
 
+  <section class="bg-part" data-bg="2">
+    <h2>Riga Technical University</h2>
+    <img src="/education/rtu-logo.png" class="school-img">
+    <h4>Semestre à l'étranger</h4>
+    <p>J'ai eu la chance de pouvoir effectuer un semestre à la Riga Technical University, de septembre 2025 à janvier 2026. Ce semestre a été l'occasion
+      de m'immerger dans un environnement international, et donc de pratiquer les langues anglaise et russe au quotidien.
+    </p>
+    <h4>Entre sciences sociales et informatique</h4>
+    <p>Pour ce semestre, j'ai pu choisir des cours que j'ai jugés profondément importants pour mon développement personnel ; International Economy, 
+      Rhetorics, Political Philosophy. J'ai également choisi des cours importants dans l'immédiat pour mes activités professionnelles ; Natural Language
+      Processing, Machine Learning, Advanced Data Processing Techniques, AI in Humanities.
+    </p>
+    <h4>Enseignement et mentorat</h4>
+    <p>Afin de me préparer à une potentielle activité d'enseignement, mais aussi pour faire progresser ma maîtrise des langues étrangères, j'ai effectué 
+      différents types de missions gratuitement durant ce semestre ; notamment de l'enseignement en informatique, du mentorat pour de la rédaction de CVs et 
+      lettres de motivation, des dashboards de data visualisation et des rapports de data analyse.
+    </p>
+  </section>
 
-  <h2>Riga Technical University</h2>
-  <h4>Semestre à l'étranger</h4>
-  <p>J'ai eu la chance de pouvoir effectuer un semestre à la Riga Technical University, de septembre 2025 à janvier 2026. Ce semestre a été l'occasion
-    de m'immerger dans un environnement international, et donc de pratiquer les langues anglaise et russe au quotidien.
-  </p>
-  <h4>Entre sciences sociales et informatique</h4>
-  <p>Pour ce semestre, j'ai pu choisir des cours que j'ai jugés profondément importants pour mon développement personnel ; International Economy, 
-    Rhetorics, Political Philosophy. J'ai également choisi des cours importants dans l'immédiat pour mes activités professionnelles ; Natural Language
-    Processing, Machine Learning, Advanced Data Processing Techniques, AI in Humanities.
-  </p>
-  <h4>Enseignement et mentorat</h4>
-  <p>Afin de me préparer à une potentielle activité d'enseignement, mais aussi pour faire progresser ma maîtrise des langues étrangères, j'ai effectué 
-    différents types de missions gratuitement durant ce semestre ; notamment de l'enseignement en informatique, du mentorat pour de la rédaction de CVs et 
-    lettres de motivation, des pages de data visualisation et des rapports de data analyse.
-  </p>
+  <section class="bg-part" data-bg="3">
+    <h2>Lycée Rémi Belleau</h2>
+    <img src="/education/lrb-3.webp" class="school-img">
+    <p>J'ai obtenu mon baccalauréat au lycée <a href="https://www.remibelleau.fr/" target="_blank">Rémi Belleau</a> de Nogent le Rotrou. J'avais choisi les spécialités Mathématiques et Physique, je faisais partie
+      de la section européenne (qui assistait à des cours d'histoire-géographie en anglais), et je suivais également l'option Mathématiques Expertes. 
+      Baccalauréat obtenu avec mention très bien en 2021.</p>
+    <p>C'est à ce lycée que j'ai pris goût à la philosophie, l'histoire et aux sciences dures, grâce à un environnement d'une bienveillance unique et des 
+      enseignants exceptionnels.<br/>J'ai également pu faire partie des voyages organisés en Amérique du Nord et en Angleterre, opportunités pour lesquelles je suis extrêmement reconnaissant. </p>
+  </section>
 
-  <h2>Lycée Rémi Belleau</h2>
-</Layout>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('.bg-part');
+      const layers = document.querySelectorAll('.page-bg-layer');
+
+      // Par défaut : activer la première couche
+      if (layers[0]) {
+        layers[0].classList.add('is-active');
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('data-bg');
+
+              layers.forEach((layer) => {
+                const layerId = layer.getAttribute('data-bg');
+                layer.classList.toggle('is-active', layerId === id);
+              });
+            }
+          });
+        },
+        {
+          threshold: 0.4, // la section est "active" quand ~40% sont visibles
+        }
+      );
+
+      sections.forEach((section) => observer.observe(section));
+    });
+  </script>
+  </Layout>

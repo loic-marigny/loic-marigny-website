@@ -315,10 +315,58 @@ main {
 }
 
 /* Typography */
-h1, h2, h3 {
+/* Typography – titres */
+h1, h2, h3, h4 {
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  font-weight: 600;
   line-height: 1.2;
-  margin: 0.5rem 0 0.4em;  /* Un petit espacement uniforme en haut */
+  margin: 0.5rem 0 0.4em;
+  animation: title-fade-up 600ms ease-out both; /* animation commune */
 }
+
+/* H1 : centrés + majuscules */
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  text-align: center;
+  text-transform: uppercase;    /* CAPS LOCK */
+  letter-spacing: 0.12em;       /* espace entre les lettres */
+}
+
+/* Autres titres : alignés à gauche avec "alinéa" */
+h2, h3, h4 {
+  text-align: left;
+  padding-left: 1rem;           /* petit retrait = alinéa */
+}
+
+/* Détails par niveau */
+h2 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin-top: 1.5rem;
+}
+
+h3 {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  margin-top: 1.25rem;
+}
+
+h4 {
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+/* Animation d'apparition des titres */
+@keyframes title-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 p {
   margin: 0.8em 0;
 }
@@ -436,4 +484,106 @@ footer {
     justify-self: center;
   }
 }
+
+.school-img {
+  height: 200px;
+  width:auto;
+  object-fit: contain;
+  margin: 10px;          /* Espacement entre les images */
+  display: inline-block; /* Pour qu'elles s’alignent sur une ligne */
+  vertical-align: middle;/* Aligne bien les images entre elles */
+}
+
+.school-pole-img {
+  height: 140px;
+  width:auto;
+  object-fit: contain;
+  margin: 10px;          /* Espacement entre les images */
+  display: inline-block; /* Pour qu'elles s’alignent sur une ligne */
+  vertical-align: middle;/* Aligne bien les images entre elles */
+}
+
+.school-row {
+  display: flex;
+  justify-content: center; /* <-- centre horizontalement les logos */
+  align-items: center;      /* <-- les garde alignés sur la même ligne */
+  gap: 10rem;
+  flex-wrap: wrap;          /* les fait passer à la ligne sur mobile */
+  margin: 1rem 0;           /* petit espace au-dessus et en dessous */
+}
+
+
+/* ===============================
+   Background sections
+=================================*/
+.bg-part {
+  min-height: 100vh;                /* pleine hauteur d’écran */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: var(--white);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 2; /* le contenu passe au-dessus du fond + filtre */
+}
+
+
+.bg-part > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===============================
+   Fond avec fondu entre images
+=================================*/
+
+.page-bg {
+  position: fixed;
+  inset: 0;              /* top:0; right:0; bottom:0; left:0 */
+  z-index: 0;
+  pointer-events: none;  /* n'intercepte pas les clics */
+  overflow: hidden;
+}
+
+/* Chaque couche d'image */
+.page-bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 800ms ease; /* durée du fondu */
+  z-index: 0;
+}
+
+/* Couche active (visible) */
+.page-bg-layer.is-active {
+  opacity: 1;
+}
+
+/* Voile sombre par-dessus l'image, mais derrière le contenu */
+.page-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);  /* ajuste l’intensité si tu veux */
+  z-index: 1;
+}
+
+
+/* Images d'arrière-plan pour chaque couche */
+.page-bg-layer.bg1 {
+  background-image: url("/education/pulv.jpg");
+}
+
+.page-bg-layer.bg2 {
+  background-image: url("/education/rtu.jpg");
+}
+
+.page-bg-layer.bg3 {
+  background-image: url("/education/lrb-4.webp");
+}
+
 
