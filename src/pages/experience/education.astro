@@ -1,19 +1,29 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import "../../styles/experiences.css";
 ---
 
 <Layout title="Education" description="Educational background and qualifications.">
-  <!-- Fond plein écran avec 3 images -->
-  <div class="page-bg">
-    <div class="page-bg-layer bg0" data-bg="0"></div>
-    <div class="page-bg-layer bg1" data-bg="1"></div>
-    <div class="page-bg-layer bg2" data-bg="2"></div>
-    <div class="page-bg-layer bg3" data-bg="3"></div>
+  <!-- Fond plein écran avec 4 images pour cette page -->
+  <div
+    class="page-bg"
+    style="
+      --bg0: url('/education/dead-poets-society.jpeg');
+      --bg1: url('/education/pulv.jpg');
+      --bg2: url('/education/rtu.jpg');
+      --bg3: url('/education/lrb-4.webp');
+    "
+  >
+    <div class="page-bg-layer" data-bg="0"></div>
+    <div class="page-bg-layer" data-bg="1"></div>
+    <div class="page-bg-layer" data-bg="2"></div>
+    <div class="page-bg-layer" data-bg="3"></div>
   </div>
   
   <section class="bg-part" data-bg="0">
     <h1>éducation</h1>
   </section>
+  
   <section class="bg-part" data-bg="1">
     <h2><a href="https://www.esilv.fr/" target="_blank">ESILV — La Défense</a></h2>
     <div class="school-row">
@@ -74,36 +84,4 @@ import Layout from "../../layouts/Layout.astro";
     <p>C'est à ce lycée que j'ai pris goût à la philosophie, l'histoire et aux sciences dures, grâce à un environnement d'une bienveillance unique et des 
       enseignants exceptionnels.<br/>J'ai également pu faire partie des voyages organisés en Amérique du Nord et en Angleterre, opportunités pour lesquelles je suis extrêmement reconnaissant. </p>
   </section>
-
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const sections = document.querySelectorAll('.bg-part');
-      const layers = document.querySelectorAll('.page-bg-layer');
-
-      // Par défaut : activer la première couche
-      if (layers[0]) {
-        layers[0].classList.add('is-active');
-      }
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.getAttribute('data-bg');
-
-              layers.forEach((layer) => {
-                const layerId = layer.getAttribute('data-bg');
-                layer.classList.toggle('is-active', layerId === id);
-              });
-            }
-          });
-        },
-        {
-          threshold: 0.4, // la section est "active" quand ~40% sont visibles
-        }
-      );
-
-      sections.forEach((section) => observer.observe(section));
-    });
-  </script>
   </Layout>

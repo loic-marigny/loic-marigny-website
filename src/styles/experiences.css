@@ -1,0 +1,53 @@
+/* src/styles/experience.css */
+
+.experience-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.experience-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.experience-card {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  backdrop-filter: blur(8px);
+}
+
+
+/* ===============================
+   Mise en page deux colonnes
+=================================*/
+
+.two-columns {
+  display: flex;
+  flex-direction: column; /* par défaut (mobile) */
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Sur écrans larges */
+@media (min-width: 900px) {
+  .two-columns {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .two-columns .column {
+    width: 48%; /* deux moitiés avec petit espace entre */
+  }
+}
+
+/* (facultatif) : apparence harmonieuse */
+.two-columns .column h4 {
+  color: var(--sand);
+  margin-bottom: 0.5rem;
+}
+
+.two-columns .column p {
+  line-height: 1.6;
+}

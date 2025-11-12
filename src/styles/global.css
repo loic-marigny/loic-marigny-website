@@ -535,7 +535,7 @@ footer {
    Background sections
 =================================*/
 .bg-part {
-  min-height: 100vh;                /* pleine hauteur d’écran */
+  min-height: 72vh;                /* pleine hauteur d’écran */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -562,6 +562,12 @@ footer {
   z-index: 0;
   pointer-events: none;  /* n'intercepte pas les clics */
   overflow: hidden;
+
+  /* Variables pour les images de fond, définies page par page */
+  --bg0: none;
+  --bg1: none;
+  --bg2: none;
+  --bg3: none;
 }
 
 /* Chaque couche d'image */
@@ -581,6 +587,23 @@ footer {
   opacity: 1;
 }
 
+/* On branche chaque layer sur la variable correspondante */
+.page-bg-layer[data-bg="0"] {
+  background-image: var(--bg0);
+}
+
+.page-bg-layer[data-bg="1"] {
+  background-image: var(--bg1);
+}
+
+.page-bg-layer[data-bg="2"] {
+  background-image: var(--bg2);
+}
+
+.page-bg-layer[data-bg="3"] {
+  background-image: var(--bg3);
+}
+
 /* Voile sombre par-dessus l'image, mais derrière le contenu */
 .page-bg::after {
   content: "";
@@ -589,26 +612,3 @@ footer {
   background: rgba(0, 0, 0, 0.35);  /* ajuste l’intensité si tu veux */
   z-index: 1;
 }
-
-
-/* Images d'arrière-plan pour chaque couche */
-.page-bg-layer.bg0 {
-  background-image: url("/education/dead-poets-society.jpeg");
-}
-
-.page-bg-layer.bg1 {
-  background-image: url("/education/pulv.jpg");
-}
-
-.page-bg-layer.bg2 {
-  background-image: url("/education/rtu.jpg");
-}
-
-.page-bg-layer.bg3 {
-  background-image: url("/education/lrb-4.webp");
-}
-
-.bg-part:first-of-type {
-  min-height: 72vh;     /* au lieu de 100vh */
-}
-

@@ -202,5 +202,37 @@ const isExact = (href: string) => currentPath === href;
         </nav>
       </div>
     </footer>
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const bg = document.querySelector('.page-bg');
+        const sections = document.querySelectorAll('.bg-part');
+        const layers = bg ? bg.querySelectorAll('.page-bg-layer') : [];
+
+        // Si la page n'a pas de fond animé, on ne fait rien
+        if (!bg || sections.length === 0 || layers.length === 0) return;
+
+        // Activer la première couche par défaut
+        if (layers[0]) {
+          layers[0].classList.add('is-active');
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('data-bg');
+                layers.forEach((layer) => {
+                  const layerId = layer.getAttribute('data-bg');
+                  layer.classList.toggle('is-active', layerId === id);
+                });
+              }
+            });
+          },
+          { threshold: 0.4 } // section "active" ~40% visible
+        );
+
+        sections.forEach((section) => observer.observe(section));
+      });
+    </script>
   </body>
 </html>

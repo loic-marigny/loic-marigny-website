@@ -1,7 +1,87 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import "../../styles/experiences.css"; // CSS spécifique à la section expérience
 ---
 
 <Layout title="Jobs" description="Previous and current work experiences.">
-  <h1>My Jobs</h1>
+  <!-- Fond plein écran avec 4 images -->
+  <div
+    class="page-bg"
+    style="
+      --bg0: url('/work/defense.jpg');
+      --bg1: url('/work/poste-source.jpg');
+      --bg2: url('/work/freelance.webp');
+      --bg3: url('/work/other.png');;
+    "
+  >
+    <div class="page-bg-layer" data-bg="0"></div>
+    <div class="page-bg-layer" data-bg="1"></div>
+    <div class="page-bg-layer" data-bg="2"></div>
+    <div class="page-bg-layer" data-bg="3"></div>
+  </div>
+
+  <!-- Section 1 -->
+  <section class="bg-part" data-bg="0">
+    <h1>Expérience professionnelle</h1>
+  </section>
+
+  <!-- Section 2 -->
+  <section class="bg-part" data-bg="1">
+    <h2>Consultant Junior MOAD Postes Sources</h2>
+    <h3>Enedis</h3>
+    <p>
+      J'effectue les 3 années de cycle ingénieur de mes études supérieures en alternance chez Enedis. Je travaille
+      à la MOAD Postes Sources ; mon rôle est d'assister mes collègues dans la mise en place de plans de travaux,
+      la gestion, visualisation et l'analyse des données. J'ai notamment développé de nombreuses solutions de
+      data visualisation, en tentant à chaque fois d'apporter à l'entreprise des solutions pertinentes et innovantes :
+      j'ai notamment produit des rapports Power BI, puis des notebooks Python et des sites internes.<br />
+      Ce travail a été particulièrement formateur ; j'ai appris à comprendre les besoins d'un utilisateur au début du
+      développement d'un produit, à implémenter des solutions de manière autonome et à itérer ensuite en fonction de
+      l'évolution des besoins.<br />
+      J'ai également compris que j'avais besoin d'un environnement professionnel dynamique et exigeant techniquement
+      pour m'épanouir, et j'ai réalisé que mes connaissances en informatique pouvaient être, lorsque bien utilisées,
+      un atout de taille.
+    </p>
+  </section>
+
+  <!-- Section 3 (placeholder) -->
+  <section class="bg-part" data-bg="2">
+    <h2>Freelance</h2>
+    <h4>Data Analyst</h4>
+    <p>Afin de compléter ma formation, j'effectue différentes missions en plus de mon travail et mes études. Les missions
+      réalisées sont pour l'instant gratuites, avec l'intention de passer au statut de freelance lorsque mon portefeuille 
+      de clients me le permettra.<br/>
+      Jusque-là, j'ai réalisé des visualisations de données, comprenant un travail de recherche, d'analyse, de synthétisation 
+      des demandes clients, puis la mise en place de solutions et les itérations pour arriver à des solutions satisfaisantes.
+      Ces visualisations étant malgré tout assez simples, j'ai choisi de les réaliser sur des fichiers html, que je transférais
+      ensuite aux utilisateurs. Les fichiers html ont été réalisés à partir de notebooks Jupyter, ce qui permettait de faire les
+      calculs, voire les placements des points pour les cartes, pour générer les fichiers html.
+      le nombre de données à traiter était important.<br/>
+      Ces missions, dans le domaine de la diplomatie et de l'éducation, ont été effectuées sur des données sensibles, elles ne 
+      sont donc malheureusement pas disponibles sur ce site. Vous pouvez en revanche aller voir les projets XYZ qui y ressemblent.
+    </p>
+    <h4>Enseignant</h4>
+    <p>J'ai également été enseignant et mentor dans de nombreux domaines : en mathématiques et physique auprès de 3 élèves, 
+      entre 2021 et 2024, puis, plus récemment, j'ai accompagné des étudiants internationaux à l'université de Riga dans
+      l'apprentissage des sciences informatiques. Bien des élèves ont été inscrits à des cours demandant des compétences en
+      informatique qu'ils n'avaient jamais acquis, et j'ai donc travaillé avec eux afin de leur permettre d'acquérir les bases 
+      du langage Python, de l'algorithmique, et les principes de base des libraries et de GitHub.</p>
+  </section>
+
+  <!-- Section 4 -->
+  <section class="bg-part" data-bg="3">
+    <h2>Autres expériences</h2>
+
+    <div class="two-columns">
+      <div class="column">
+        <h4>BNP Paribas</h4>
+        <p>-</p>
+      </div>
+
+      <div class="column">
+        <h4>E.Leclerc</h4>
+        <p>-</p>
+      </div>
+    </div>
+  </section>
 </Layout>
