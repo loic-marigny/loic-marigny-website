@@ -4,7 +4,7 @@ import "../../styles/associations.css";
 ---
 
 <Layout title="Associations" description="Association involvements and roles.">
-    <!-- Fond plein écran pour la page Associations -->
+  <!-- Gestion background -->
   <div class="page-bg">
     <!-- Section 0 : intro, full image -->
     <div
@@ -23,17 +23,18 @@ import "../../styles/associations.css";
       data-bg="1"
     ></div>
 
-    <!-- Section 2 : AMMA, timeline à droite → image à droite -->
+    <!-- Section 2 : AMMA, timeline à droite → image à droite,
+        et on décale l’image (ex : 80% vers la droite) -->
     <div
       class="page-bg-layer asso-bg-right"
       style="
-        --asso-image: url('/association/amma.jpg');
-        --asso-color: rgba(0, 0, 0, 0.7);
+        --asso-image: url('/assos/amma.jpg');
+        --asso-color: #000000;
       "
       data-bg="2"
     ></div>
 
-    <!-- Sections suivantes : à adapter quand tu auras les visuels -->
+    <!-- Tu adapteras les suivantes quand tu auras les images définitives -->
     <div
       class="page-bg-layer asso-bg-left"
       style="
@@ -81,6 +82,7 @@ import "../../styles/associations.css";
   </div>
 
 
+
   <!-- Section 1 -->
   <section class="bg-part" data-bg="0">
     <h1>Associations</h1>
@@ -104,12 +106,16 @@ import "../../styles/associations.css";
         <!-- Colonne timeline -->
         <ul class="roles-timeline">
           <li>
-            <span class="role-title">Bureau – Trésorier</span>
-            <span class="role-meta">2023–2024</span>
+            <span class="role-title">Membre</span>
+            <span class="role-meta">2025 - </span>
           </li>
           <li>
-            <span class="role-title">Bénévole logistique</span>
-            <span class="role-meta">2022–2023</span>
+            <span class="role-title">Vice-Président</span>
+            <span class="role-meta">2024 - 2025</span>
+          </li>
+          <li>
+            <span class="role-title">Membre</span>
+            <span class="role-meta">2022 – 2024</span>
           </li>
         </ul>
 
@@ -139,8 +145,16 @@ import "../../styles/associations.css";
       <div class="asso-main">
         <ul class="roles-timeline">
           <li>
-            <span class="role-title">Responsable com’</span>
-            <span class="role-meta">2024–2025</span>
+            <span class="role-title">Membre</span>
+            <span class="role-meta">2025 - </span>
+          </li>
+          <li>
+            <span class="role-title">Responsable communication</span>
+            <span class="role-meta">2024 – 2025</span>
+          </li>
+          <li>
+            <span class="role-title"> Membre </span>
+            <span class="role-meta">2023 – 2024</span>
           </li>
         </ul>
 
