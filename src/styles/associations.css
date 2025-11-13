@@ -1,0 +1,74 @@
+/* ===== Mise en colonnes (desktop) ===== */
+.asso {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .asso {
+    grid-template-columns: 1fr 1fr; /* timeline | contenu */
+  }
+}
+
+/* ===== Timeline verticale de rôles ===== */
+.roles-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.5rem;        /* espace pour la ligne + points */
+  position: relative;
+}
+
+
+/* Chaque rôle */
+.roles-timeline li {
+  position: relative;
+  margin: 0 0 1.25rem 0;
+}
+
+/* Point du rôle */
+.roles-timeline li::before {
+  content: "";
+  position: absolute;
+  left: -1.24rem;            /* alignement horizontal */
+  top: 0.55rem;              /* abaissé de ~5px */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--sand);   /* même couleur que la ligne */
+}
+
+/* Segment de ligne entre les points (pas sur le dernier) */
+.roles-timeline li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  /* ligne centrée sur le point : 10 px de diamètre → centre à +5px du top */
+  left: calc(-1.24rem + 4px);
+  top: calc(0.55rem + 5px);      /* part du centre du point courant */
+  height: calc(100% + 1.25rem);  /* jusqu’au centre du point suivant */
+  width: 2px;
+  background: var(--sand);       /* même couleur que le point */
+}
+
+/* Typo des éléments du rôle */
+.role-title {
+  display: block;
+  color: var(--sand);
+  font-weight: 600;
+}
+
+.role-meta {
+  display: block;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  margin-top: 0.1rem;
+}
+
+
+/* ===== Colonne contenu ===== */
+.asso-content {
+  background: rgba(0,0,0,0.35);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  backdrop-filter: blur(6px);
+}
