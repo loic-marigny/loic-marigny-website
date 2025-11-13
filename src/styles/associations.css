@@ -1,17 +1,104 @@
-/* ===== Mise en colonnes (desktop) ===== */
+/* ===============================
+   Fonds de page pour Associations
+   (moitié image / moitié couleur)
+=================================*/
+
+/* intro : full image */
+.page-bg-layer.asso-bg-full {
+  background-image: var(--asso-image);
+  background-size: cover;
+  background-position: center;
+}
+
+/* image à gauche, couleur à droite */
+.page-bg-layer.asso-bg-left {
+  background-image:
+    /* couleur unie + dégradé vers transparent côté centre */
+    linear-gradient(
+      to right,
+      var(--asso-color, rgba(0, 0, 0, 0.85)) 0 40%,
+      transparent 65% 100%
+    ),
+    var(--asso-image);
+  background-size: cover;
+  background-position: center;
+}
+
+/* image à droite, couleur à gauche */
+.page-bg-layer.asso-bg-right {
+  background-image:
+    linear-gradient(
+      to left,
+      var(--asso-color, rgba(0, 0, 0, 0.85)) 0 40%,
+      transparent 65% 100%
+    ),
+    var(--asso-image);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Thème texte par section d'association */
+.asso-section {
+  --text-main: var(--sand);                          /* titre, éléments forts */
+  --text-muted: rgba(255, 255, 255, 0.9);            /* texte courant */
+
+  color: var(--text-muted);                          /* couleur par défaut */
+}
+
+.asso-section h2,
+.asso-section .role-title {
+  color: var(--text-main);
+}
+
+.asso-section h3,
+.asso-section h4,
+.asso-section .role-meta {
+  color: var(--text-muted);
+}
+
+.asso-section p {
+  color: var(--text-muted);
+}
+
+
+/* ===== Bloc association global ===== */
 .asso {
+  position: relative;
+  border-radius: 16px;
+  padding: 1.75rem 2rem 1.5rem;
+  overflow: hidden;
+  isolation: isolate; /* pour bien gérer les z-index internes */
+}
+
+
+/* ===== Partie principale en colonnes (timeline + contenu) ===== */
+.asso-main {
   display: grid;
   gap: 2rem;
-  align-items: start;
+  align-items: flex-start;
 }
 
 @media (min-width: 900px) {
-  .asso {
-    grid-template-columns: 1fr 1fr; /* timeline | contenu */
+  .asso-main {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  /* inversion des colonnes quand la timeline est à droite */
+  .asso--timeline-right .roles-timeline {
+    order: 2;
+  }
+
+  .asso--timeline-right .asso-content {
+    order: 1;
   }
 }
 
-/* ===== Timeline verticale de rôles ===== */
+/* Bas de bloc */
+.asso-extra {
+  margin-top: 1.75rem;
+}
+
+/* ===== Timeline verticale de rôles (ton code actuel, conservé) ===== */
 .roles-timeline {
   list-style: none;
   margin: 0;
@@ -19,8 +106,6 @@
   position: relative;
 }
 
-
-/* Chaque rôle */
 .roles-timeline li {
   position: relative;
   margin: 0 0 1.25rem 0;
@@ -64,10 +149,9 @@
   margin-top: 0.1rem;
 }
 
-
 /* ===== Colonne contenu ===== */
 .asso-content {
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 12px;
   padding: 1rem 1.25rem;
   backdrop-filter: blur(6px);

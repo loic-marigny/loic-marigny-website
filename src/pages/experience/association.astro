@@ -4,17 +4,82 @@ import "../../styles/associations.css";
 ---
 
 <Layout title="Associations" description="Association involvements and roles.">
-  <!-- Fond plein écran avec 4 images -->
+    <!-- Fond plein écran pour la page Associations -->
   <div class="page-bg">
-  <div class="page-bg-layer" style="--bg: url('/association/defense.jpg')"  data-bg="0"></div>
-  <div class="page-bg-layer" style="--bg: url('/association/poste-source.jpg')" data-bg="1"></div>
-  <div class="page-bg-layer" style="--bg: url('/association/freelance.webp')" data-bg="2"></div>
-  <div class="page-bg-layer" style="--bg: url('/association/other.png')" data-bg="3"></div>
-  <div class="page-bg-layer" style="--bg: url('/association/defense.jpg')"  data-bg="4"></div>
-  <div class="page-bg-layer" style="--bg: url('/association/poste-source.jpg')" data-bg="5"></div>
-  <div class="page-bg-layer" style="--bg: url('/association/freelance.webp')" data-bg="6"></div>
-  <div class="page-bg-layer" style="--bg: url('/association/other.png')" data-bg="7"></div>
-</div>
+    <!-- Section 0 : intro, full image -->
+    <div
+      class="page-bg-layer asso-bg-full"
+      style="--asso-image: url('/association/defense.jpg');"
+      data-bg="0"
+    ></div>
+
+    <!-- Section 1 : ADA, timeline à gauche → image à gauche -->
+    <div
+      class="page-bg-layer asso-bg-left"
+      style="
+        --asso-image: url('/assos/galada.JPG');
+        --asso-color: #9F1B37;
+      "
+      data-bg="1"
+    ></div>
+
+    <!-- Section 2 : AMMA, timeline à droite → image à droite -->
+    <div
+      class="page-bg-layer asso-bg-right"
+      style="
+        --asso-image: url('/association/amma.jpg');
+        --asso-color: rgba(0, 0, 0, 0.7);
+      "
+      data-bg="2"
+    ></div>
+
+    <!-- Sections suivantes : à adapter quand tu auras les visuels -->
+    <div
+      class="page-bg-layer asso-bg-left"
+      style="
+        --asso-image: url('/association/joute.jpg');
+        --asso-color: #243553;
+      "
+      data-bg="3"
+    ></div>
+
+    <div
+      class="page-bg-layer asso-bg-right"
+      style="
+        --asso-image: url('/association/leotalks.jpg');
+        --asso-color: #4B2F73;
+      "
+      data-bg="4"
+    ></div>
+
+    <div
+      class="page-bg-layer asso-bg-left"
+      style="
+        --asso-image: url('/association/comedie.jpg');
+        --asso-color: #704325;
+      "
+      data-bg="5"
+    ></div>
+
+    <div
+      class="page-bg-layer asso-bg-right"
+      style="
+        --asso-image: url('/association/davincibot.jpg');
+        --asso-color: #004b4b;
+      "
+      data-bg="6"
+    ></div>
+
+    <div
+      class="page-bg-layer asso-bg-left"
+      style="
+        --asso-image: url('/association/plume.jpg');
+        --asso-color: #5a364d;
+      "
+      data-bg="7"
+    ></div>
+  </div>
+
 
   <!-- Section 1 -->
   <section class="bg-part" data-bg="0">
@@ -28,23 +93,35 @@ import "../../styles/associations.css";
   <section class="bg-part" data-bg="1">
     <h2>ADA — Aider Donner Agir</h2>
 
-    <div class="asso">
-      <!-- Colonne timeline -->
-      <ul class="roles-timeline">
-        <!-- 1 point par poste -->
-        <li>
-          <span class="role-title">Bureau – Trésorier</span>
-          <span class="role-meta">2023–2024</span>
-        </li>
-        <li>
-          <span class="role-title">Bénévole logistique</span>
-          <span class="role-meta">2022–2023</span>
-        </li>
-      </ul>
+    <div
+      class="asso asso--timeline-left"
+      style="
+        --asso-image: url('/assos/galada.JPG');
+        --asso-color: #9F1B37;
+      "
+    >
+      <div class="asso-main">
+        <!-- Colonne timeline -->
+        <ul class="roles-timeline">
+          <li>
+            <span class="role-title">Bureau – Trésorier</span>
+            <span class="role-meta">2023–2024</span>
+          </li>
+          <li>
+            <span class="role-title">Bénévole logistique</span>
+            <span class="role-meta">2022–2023</span>
+          </li>
+        </ul>
 
-      <!-- Colonne contenu -->
-      <div class="asso-content">
-        <p>Résumé rapide de l’association, objectifs, missions, ce que tu y as appris…</p>
+        <!-- Colonne contenu -->
+        <div class="asso-content">
+          <p>Résumé rapide de l’association, objectifs, missions, ce que tu y as appris…</p>
+        </div>
+      </div>
+
+      <!-- Bas de bloc (texte ou images en plus) -->
+      <div class="asso-extra">
+        <p>Texte complémentaire, anecdotes, photos, actions marquantes…</p>
       </div>
     </div>
   </section>
@@ -52,16 +129,28 @@ import "../../styles/associations.css";
   <section class="bg-part" data-bg="2">
     <h2>AMMA — Association for Mixed Martial Arts</h2>
 
-    <div class="asso">
-      <ul class="roles-timeline">
-        <li>
-          <span class="role-title">Responsable com’</span>
-          <span class="role-meta">2024–2025</span>
-        </li>
-      </ul>
+    <div
+      class="asso asso--timeline-right"
+      style="
+        --asso-image: url('/association/amma.jpg');
+        --asso-color: rgba(0, 0, 0, 0.7);
+      "
+    >
+      <div class="asso-main">
+        <ul class="roles-timeline">
+          <li>
+            <span class="role-title">Responsable com’</span>
+            <span class="role-meta">2024–2025</span>
+          </li>
+        </ul>
 
-      <div class="asso-content">
-        <p>…</p>
+        <div class="asso-content">
+          <p>…</p>
+        </div>
+      </div>
+
+      <div class="asso-extra">
+        <p>Texte ou images supplémentaires pour AMMA.</p>
       </div>
     </div>
   </section>
