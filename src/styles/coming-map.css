@@ -471,8 +471,9 @@
   }
 
   .destinations-panel__content {
+    flex: 1 1 auto;
     overflow-y: auto;
-    min-height: 0;
+    max-height: calc(var(--column-height) - 60px);
   }
 
   .destinations-summary {
