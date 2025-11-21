@@ -511,9 +511,8 @@ footer {
   height: 200px;
   width:auto;
   object-fit: contain;
-  margin: 10px;          /* Espacement entre les images */
-  display: inline-block; /* Pour qu'elles s’alignent sur une ligne */
-  vertical-align: middle;/* Aligne bien les images entre elles */
+  margin: 10px auto;
+  display: block;
 }
 
 .school-pole-img {
@@ -532,6 +531,16 @@ footer {
   gap: 10rem;
   flex-wrap: wrap;          /* les fait passer à la ligne sur mobile */
   margin: 1rem 0;           /* petit espace au-dessus et en dessous */
+}
+
+.education-video {
+  display: block;
+  margin: 1.5rem auto 0;
+  width: min(90vw, 700px);
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-width: 100%;
+  border: none;
 }
 
 
@@ -616,3 +625,5 @@ footer {
   background: rgba(0, 0, 0, 0.35);  /* ajuste l’intensité si tu veux */
   z-index: 1;
 }
+
+
