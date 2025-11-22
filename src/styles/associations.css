@@ -69,7 +69,7 @@
 .asso {
   position: relative;
   border-radius: 16px;
-  padding: 1.75rem 2rem 1.5rem;
+  padding: 0.75rem 2rem 1.4rem;
   overflow: hidden;
   isolation: isolate; /* pour bien gérer les z-index internes */
 }
@@ -77,14 +77,20 @@
 
 /* ===== Partie principale en colonnes (timeline + contenu) ===== */
 .asso-main {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
   align-items: flex-start;
 }
 
 @media (min-width: 900px) {
   .asso-main {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .asso-main > * {
+    flex: 1 1 0;
   }
 
   /* inversion des colonnes quand la timeline est à droite */
@@ -159,4 +165,98 @@
   border-radius: 12px;
   padding: 1rem 1.25rem;
   backdrop-filter: blur(6px);
+}
+
+.asso-heading {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto 0.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.asso-logo {
+  display: block;
+  max-width: 150px;
+  width: 60%;
+  margin: 0 auto 2rem;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.35));
+}
+
+@media (min-width: 900px) {
+  .bg-part--align-left {
+    align-items: flex-start;
+  }
+
+  .bg-part--align-right {
+    align-items: flex-end;
+  }
+
+  .bg-part--align-left > h2,
+  .bg-part--align-left .asso-heading {
+    max-width: min(520px, 42vw);
+    margin-left: 0;
+    margin-right: auto;
+    text-align: left;
+  }
+
+  .bg-part--align-right > h2,
+  .bg-part--align-right .asso-heading {
+    max-width: min(520px, 42vw);
+    margin-left: auto;
+    margin-right: 0;
+    text-align: right;
+  }
+
+  .bg-part--align-left .asso,
+  .bg-part--align-right .asso {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .bg-part--align-left .asso-main,
+  .bg-part--align-right .asso-main {
+    justify-content: space-between;
+  }
+
+  .bg-part--align-left .roles-timeline,
+  .bg-part--align-right .roles-timeline {
+    max-width: min(360px, 40vw);
+  }
+
+  .bg-part--align-left .roles-timeline {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .bg-part--align-right .roles-timeline {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .bg-part--align-left .asso-content,
+  .bg-part--align-right .asso-content {
+    max-width: min(520px, 45vw);
+  }
+
+  .bg-part--align-left .asso-content {
+    margin-left: auto;
+    margin-right: 0;
+    text-align: left;
+  }
+
+  .bg-part--align-right .asso-content {
+    margin-left: 0;
+    margin-right: auto;
+    text-align: left;
+  }
+
+  .bg-part--align-right .asso-extra {
+    text-align: right;
+  }
 }
