@@ -273,7 +273,7 @@
 }
 
 .asso-media-control--prev {
-  left: -1.5rem;
+  left: 0rem;
 }
 
 .asso-media-control--next {
@@ -290,11 +290,11 @@
 }
 
 .asso-media-control--next::before {
-  transform: rotate(-45deg);
+  transform: rotate(45deg);
 }
 
 .asso-media-control--prev::before {
-  transform: rotate(135deg);
+  transform: rotate(-135deg);
 }
 
 .asso-media-control:hover,
