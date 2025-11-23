@@ -548,7 +548,7 @@ footer {
    Background sections
 =================================*/
 .bg-part {
-  min-height: 72vh;                /* pleine hauteur d’écran */
+  min-height: 72vh;                /* pleine hauteur d'écran */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -557,6 +557,12 @@ footer {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   position: relative;
   z-index: 2; /* le contenu passe au-dessus du fond + filtre */
+}
+
+.bg-part--align-left,
+.bg-part--align-right {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 

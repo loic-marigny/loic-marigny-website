@@ -215,56 +215,58 @@ const marqueeItems = [...ammaMediaItems, ...ammaMediaItems];
         </div>
       </div>
 
-      <div class="asso-extra">
-        <div class="asso-media-marquee" aria-label="Galerie des actions AMMA" data-media-slider>
-          <button
-            type="button"
-            class="asso-media-control asso-media-control--prev"
-            data-media-control="prev"
-            aria-label="Voir les visuels précédents"
-          >
-            <span class="visually-hidden">Voir les visuels précédents</span>
-          </button>
-          <div class="asso-media-track-wrapper">
-            <div class="asso-media-track" data-media-track>
-              {marqueeItems.map((item, index) => (
-                <div
-                  class={`asso-media-card ${item.type === "video" ? "asso-media-card--video" : ""}`}
-                  data-type={item.type}
-                  aria-hidden={index >= ammaMediaItems.length ? "true" : undefined}
-                >
-                  {item.type === "image" ? (
-                    <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
-                  ) : (
-                    <div class="asso-media-video">
-                      <iframe
-                        src={item.embedUrl}
-                        title={item.title}
-                        loading="lazy"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen
-                      ></iframe>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-          <button
-            type="button"
-            class="asso-media-control asso-media-control--next"
-            data-media-control="next"
-            aria-label="Voir les visuels suivants"
-          >
-            <span class="visually-hidden">Voir les visuels suivants</span>
-          </button>
-        </div>
-        <p class="asso-media-hint">
-          Le bandeau défile en continu&nbsp;— survolez ou touchez pour le mettre en pause et explorer chaque visuel.
-        </p>
       </div>
     </div>
   </section>
+
+  <div class="asso-extra asso-extra--full-bleed">
+    <div class="asso-media-marquee" aria-label="Galerie des actions AMMA" data-media-slider>
+      <button
+        type="button"
+        class="asso-media-control asso-media-control--prev"
+        data-media-control="prev"
+        aria-label="Voir les visuels précédents"
+      >
+        <span class="visually-hidden">Voir les visuels précédents</span>
+      </button>
+      <div class="asso-media-track-wrapper">
+        <div class="asso-media-track" data-media-track>
+          {marqueeItems.map((item, index) => (
+            <div
+              class={`asso-media-card ${item.type === "video" ? "asso-media-card--video" : ""}`}
+              data-type={item.type}
+              aria-hidden={index >= ammaMediaItems.length ? "true" : undefined}
+            >
+              {item.type === "image" ? (
+                <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
+              ) : (
+                <div class="asso-media-video">
+                  <iframe
+                    src={item.embedUrl}
+                    title={item.title}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+      <button
+        type="button"
+        class="asso-media-control asso-media-control--next"
+        data-media-control="next"
+        aria-label="Voir les visuels suivants"
+      >
+        <span class="visually-hidden">Voir les visuels suivants</span>
+      </button>
+    </div>
+    <p class="asso-media-hint">
+      Le bandeau défile en continu&nbsp;— survolez ou touchez pour le mettre en pause et explorer chaque visuel.
+    </p>
+  </div>
 
   <section class="bg-part bg-part--align-left" data-bg="3">
     <div class="asso-heading">
@@ -355,7 +357,7 @@ const marqueeItems = [...ammaMediaItems, ...ammaMediaItems];
     </div>
   </section>
 
-  <section class="bg-part bg-part--align-right" data-bg="6">
+  <section class="bg-part bg-part--align-right bg-part--full-bleed" data-bg="6">
     <div class="asso-heading">
       <h2>Comedia da Vinci</h2>
       <img src="/assos/comedia-logo.png" alt="Logo Comedia de Vinci" class="asso-logo">
