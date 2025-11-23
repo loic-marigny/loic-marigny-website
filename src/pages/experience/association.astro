@@ -1,6 +1,52 @@
 ---
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/associations.css";
+
+const slidesDirectory = fileURLToPath(new URL("../../../public/assos/amma-slides", import.meta.url));
+const allowedSlideExtensions = new Set([".png", ".jpg", ".jpeg", ".gif", ".webp", ".heic", ".heif"]);
+const collator = new Intl.Collator("fr", { sensitivity: "base" });
+
+const toAltText = (filename: string) => {
+  const withoutExt = filename.replace(/\.[^.]+$/, "");
+  const cleaned = withoutExt.replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim();
+  if (!cleaned) return "Visuel AMMA";
+  return `Visuel AMMA — ${cleaned}`;
+};
+
+const ammaSlideImages = fs
+  .readdirSync(slidesDirectory)
+  .filter((file) => allowedSlideExtensions.has(path.extname(file).toLowerCase()))
+  .sort((a, b) => collator.compare(a, b))
+  .map((file, index) => ({
+    type: "image" as const,
+    src: `/assos/amma-slides/${file}`,
+    alt: toAltText(file),
+    id: `amma-image-${index}`
+  }));
+
+const ammaYoutubeVideos = [
+  {
+    type: "video" as const,
+    title: "AMMA - Session de démonstration",
+    embedUrl: "https://www.youtube.com/embed/_njkeV-2ZI8",
+    description: "Moments forts d'une session d'entraînement AMMA.",
+    id: "amma-video-demo"
+  },
+  {
+    type: "video" as const,
+    title: "AMMA - Sparring Highlights",
+    embedUrl: "https://www.youtube.com/embed/l5ePZ_1x9i8",
+    description: "Retour sur les sparrings majeurs de la saison.",
+    id: "amma-video-sparring"
+  }
+];
+
+const ammaMediaItems = [...ammaSlideImages, ...ammaYoutubeVideos];
+const marqueeItems = [...ammaMediaItems, ...ammaMediaItems];
 ---
 
 <Layout title="Associations" description="Association involvements and roles.">
@@ -170,7 +216,52 @@ import "../../styles/associations.css";
       </div>
 
       <div class="asso-extra">
-        <p>Texte ou images supplémentaires pour AMMA.</p>
+        <div class="asso-media-marquee" aria-label="Galerie des actions AMMA" data-media-slider>
+          <button
+            type="button"
+            class="asso-media-control asso-media-control--prev"
+            data-media-control="prev"
+            aria-label="Voir les visuels précédents"
+          >
+            ←
+          </button>
+          <div class="asso-media-track-wrapper">
+            <div class="asso-media-track" data-media-track>
+              {marqueeItems.map((item, index) => (
+                <div
+                  class={`asso-media-card ${item.type === "video" ? "asso-media-card--video" : ""}`}
+                  data-type={item.type}
+                  aria-hidden={index >= ammaMediaItems.length ? "true" : undefined}
+                >
+                  {item.type === "image" ? (
+                    <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
+                  ) : (
+                    <div class="asso-media-video">
+                      <iframe
+                        src={item.embedUrl}
+                        title={item.title}
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                      ></iframe>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          <button
+            type="button"
+            class="asso-media-control asso-media-control--next"
+            data-media-control="next"
+            aria-label="Voir les visuels suivants"
+          >
+            →
+          </button>
+        </div>
+        <p class="asso-media-hint">
+          Le bandeau défile en continu&nbsp;— survolez ou touchez pour le mettre en pause et explorer chaque visuel.
+        </p>
       </div>
     </div>
   </section>
@@ -328,4 +419,72 @@ import "../../styles/associations.css";
       </div>
     </div>
   </section>
+
+  <div id="assoMediaOverlay" class="asso-media-overlay" aria-hidden="true">
+    <figure>
+      <button type="button" class="asso-media-overlay__close" data-overlay-close aria-label="Fermer l'aperçu">
+        ×
+      </button>
+      <img src="" alt="" />
+      <figcaption class="asso-media-overlay__caption"></figcaption>
+    </figure>
+  </div>
+
+  <script type="module">
+    const scrollStep = 320;
+    const sliders = document.querySelectorAll("[data-media-slider]");
+    sliders.forEach((slider) => {
+      const track = slider.querySelector("[data-media-track]");
+      slider.querySelectorAll("[data-media-control]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const direction = button.dataset.mediaControl === "next" ? 1 : -1;
+          track?.scrollBy({ left: direction * scrollStep, behavior: "smooth" });
+        });
+      });
+    });
+
+    const overlay = document.getElementById("assoMediaOverlay");
+    if (overlay) {
+      const overlayImg = overlay.querySelector("img");
+      const overlayCaption = overlay.querySelector(".asso-media-overlay__caption");
+
+      const openOverlay = (src, alt) => {
+        if (!overlayImg) {
+          return;
+        }
+        overlayImg.src = src;
+        overlayImg.alt = alt;
+        if (overlayCaption) {
+          overlayCaption.textContent = alt;
+        }
+        overlay.classList.add("is-visible");
+        overlay.setAttribute("aria-hidden", "false");
+      };
+
+      const closeOverlay = () => {
+        overlay.classList.remove("is-visible");
+        overlay.setAttribute("aria-hidden", "true");
+      };
+
+      overlay.querySelectorAll("[data-overlay-close]").forEach((closeEl) => {
+        closeEl.addEventListener("click", closeOverlay);
+      });
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) {
+          closeOverlay();
+        }
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeOverlay();
+        }
+      });
+
+      document.querySelectorAll(".asso-media-card[data-type=\"image\"] img").forEach((img) => {
+        img.addEventListener("click", () => {
+          openOverlay(img.src, img.alt);
+        });
+      });
+    }
+  </script>
 </Layout>
