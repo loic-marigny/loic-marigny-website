@@ -432,15 +432,78 @@ const marqueeItems = [...ammaMediaItems, ...ammaMediaItems];
 
   <script type="module">
     const scrollStep = 320;
+    const autoScrollSpeed = 0.6;
     const sliders = document.querySelectorAll("[data-media-slider]");
     sliders.forEach((slider) => {
       const track = slider.querySelector("[data-media-track]");
+      if (!track) {
+        return;
+      }
+
+      const getLoopWidth = () => track.scrollWidth / 2;
+
+      const normalizeForward = () => {
+        const loopWidth = getLoopWidth();
+        if (loopWidth > 0 && track.scrollLeft >= loopWidth) {
+          track.scrollLeft -= loopWidth;
+        }
+      };
+
+      const normalizeBackward = () => {
+        const loopWidth = getLoopWidth();
+        if (loopWidth > 0 && track.scrollLeft < 0) {
+          track.scrollLeft += loopWidth;
+        }
+      };
+
+      const scrollByStep = (direction) => {
+        const loopWidth = getLoopWidth();
+        if (direction === -1 && loopWidth > 0 && track.scrollLeft <= 0) {
+          track.scrollLeft += loopWidth;
+        }
+        normalizeBackward();
+        track.scrollLeft += direction * scrollStep;
+        normalizeForward();
+      };
+
+      let animationId = null;
+      let restartTimeout = null;
+      const autoStep = () => {
+        track.scrollLeft += autoScrollSpeed;
+        normalizeForward();
+        animationId = requestAnimationFrame(autoStep);
+      };
+      const startAuto = () => {
+        if (animationId === null) {
+          animationId = requestAnimationFrame(autoStep);
+        }
+      };
+      const stopAuto = () => {
+        if (animationId !== null) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        }
+        if (restartTimeout !== null) {
+          clearTimeout(restartTimeout);
+          restartTimeout = null;
+        }
+      };
+
+      startAuto();
+
       slider.querySelectorAll("[data-media-control]").forEach((button) => {
         button.addEventListener("click", () => {
           const direction = button.dataset.mediaControl === "next" ? 1 : -1;
-          track?.scrollBy({ left: direction * scrollStep, behavior: "smooth" });
+          stopAuto();
+          scrollByStep(direction);
+          restartTimeout = window.setTimeout(startAuto, 1500);
         });
       });
+
+      slider.addEventListener("mouseenter", stopAuto);
+      slider.addEventListener("mouseleave", startAuto);
+      slider.addEventListener("focusin", stopAuto);
+      slider.addEventListener("focusout", startAuto);
     });
 
     const overlay = document.getElementById("assoMediaOverlay");
