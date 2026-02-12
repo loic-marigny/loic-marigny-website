@@ -177,6 +177,21 @@
   backdrop-filter: blur(6px);
 }
 
+.asso-content-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.asso-content--links {
+  display: flex;
+  align-items: center;
+}
+
+.asso-content--links .socials {
+  justify-content: flex-start;
+}
+
 .asso-heading {
   width: 100%;
   max-width: 520px;
@@ -458,7 +473,18 @@
     text-align: left;
   }
 
-  .bg-part--align-right .asso-extra {
-    text-align: right;
+.bg-part--align-right .asso-extra {
+  text-align: right;
+}
+}
+
+/* ===== Espacement entre sections (page Associations uniquement) ===== */
+.bg-part + .bg-part {
+  margin-top: 3.5rem;
+}
+
+@media (min-width: 900px) {
+  .bg-part + .bg-part {
+    margin-top: 4.5rem;
   }
 }

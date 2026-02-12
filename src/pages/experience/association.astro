@@ -171,24 +171,36 @@ const marqueeItems = ammaMediaItems;
         </ul>
 
         <!-- Colonne contenu -->
-        <div class="asso-content">
-          <p>ADA est l'association caritative du Pôle Léonard de Vinci, comptant près de 150 membres. Ses missions s'organisent
-            autour de 4 axes : la précarité, l'enfance, le handicap et la maladie.<br/>
-            J'ai participé à de nombreuses actions, des distributions alimentaires, des évènements de sensibilisation, des
-            récoltes de fonds, dès ma première année. Cet investissement m'a permis d'accéder en 2024 à la vice-présidene de
-            l'association, que j'ai assurée pendant un an.<br/>
-            Dans mon rôle de vice-président, j'ai participé à coordonner toutes les activités de l'association, les actions
-            régulières comme les projets majeurs : l'organisation d'un mois de collecte pour Octobre Rose, ou le Gala de
-            l'association, organisé avec un budget de 1 400 €, nous ayant permis de récolter 5 400 € à reverser à nos
-            associations partenaires.<br/>
-            
-          </p>
+        <div class="asso-content-stack">
+          <div class="asso-content">
+            <p>ADA est l'association caritative du Pôle Léonard de Vinci, comptant près de 150 membres. Ses missions s'organisent
+              autour de 4 axes : la précarité, l'enfance, le handicap et la maladie.<br/>
+              J'ai participé à de nombreuses actions, des distributions alimentaires, des évènements de sensibilisation, des
+              récoltes de fonds, dès ma première année. Cet investissement m'a permis d'accéder en 2024 à la vice-présidence de
+              l'association, que j'ai assurée pendant un an.<br/>
+              Dans mon rôle de vice-président, j'ai participé à coordonner toutes les activités de l'association, les actions
+              régulières comme les projets majeurs : l'organisation d'un mois de collecte pour Octobre Rose, ou le Gala de
+              l'association, organisé avec un budget de 1 400 €, nous ayant permis de récolter 5 400 € à reverser à nos
+              associations partenaires.<br/>
+            </p>
+          </div>
+          <div class="asso-content asso-content--links">
+            <nav class="socials asso-links" aria-label="Liens ADA">
+              <a href="#" aria-label="Instagram">
+                <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="Instagram" loading="lazy" />
+              </a>
+              <a href="#" aria-label="Site web">
+                <img src="/logos/web.svg" alt="Site web" loading="lazy" />
+              </a>
+              <a href="#" aria-label="LinkedIn">
+                <img src="/icons/linkedin-logo.svg" alt="LinkedIn" loading="lazy" />
+              </a>
+              <a href="#" aria-label="Facebook">
+                <img src="https://cdn.simpleicons.org/facebook/FFFFFF" alt="Facebook" loading="lazy" />
+              </a>
+            </nav>
+          </div>
         </div>
-      </div>
-
-      <!-- Bas de bloc (texte ou images en plus) -->
-      <div class="asso-extra">
-        <p>Texte complémentaire, anecdotes, photos, actions marquantes…</p>
       </div>
     </div>
   </section>
@@ -218,7 +230,15 @@ const marqueeItems = ammaMediaItems;
         </ul>
 
         <div class="asso-content">
-          <p>…</p>
+          <p>AMMA est l'association de sports de combat du Pôle Léonard de Vinci. Différents arts martiaux y sont pratiqués :
+            boxe anglaise, thaï, ju-jitsu brésilien, MMA...<br/>
+            L'association est fondée sur les principes de dépassement, d'exigence avec soi-même et d'entraide entre les membres.
+            Je l'ai intégrée en 2023, avant de prendre le poste de responsable de la communication en 2024, pour une année.
+            Nos productions défilent dans le bandeau ci-dessous.<br/>
+            Au-delà des séances régulières (2 par semaines), nous avons notamment organisé la Coupe de France de Pancrace, en
+            partenariat avec la Fédération Française de Sport Universitaire, et un voyage pour participer à un camp de boxe thai
+            à Pai, Thaïlande.
+          </p>
         </div>
       </div>
 
@@ -440,18 +460,63 @@ const marqueeItems = ammaMediaItems;
 
   <script type="module">
     const scrollStep = 320;
+    const autoScrollSpeed = 0.6;
     const sliders = document.querySelectorAll("[data-media-slider]");
     sliders.forEach((slider) => {
       const track = slider.querySelector("[data-media-track]");
       if (!track) {
         return;
       }
+
+      const scrollByStep = (direction) => {
+        track.scrollBy({ left: direction * scrollStep, behavior: "smooth" });
+      };
+
+      let animationId = null;
+      let restartTimeout = null;
+      const autoStep = () => {
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (maxScroll <= 0) {
+          return;
+        }
+        if (track.scrollLeft >= maxScroll) {
+          track.scrollLeft = 0;
+        } else {
+          track.scrollLeft += autoScrollSpeed;
+        }
+        animationId = requestAnimationFrame(autoStep);
+      };
+      const startAuto = () => {
+        if (animationId === null) {
+          animationId = requestAnimationFrame(autoStep);
+        }
+      };
+      const stopAuto = () => {
+        if (animationId !== null) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        }
+        if (restartTimeout !== null) {
+          clearTimeout(restartTimeout);
+          restartTimeout = null;
+        }
+      };
+
+      startAuto();
+
       slider.querySelectorAll("[data-media-control]").forEach((button) => {
         button.addEventListener("click", () => {
           const direction = button.dataset.mediaControl === "next" ? 1 : -1;
-          track.scrollBy({ left: direction * scrollStep, behavior: "smooth" });
+          stopAuto();
+          scrollByStep(direction);
+          restartTimeout = window.setTimeout(startAuto, 1500);
         });
       });
+
+      slider.addEventListener("mouseenter", stopAuto);
+      slider.addEventListener("mouseleave", startAuto);
+      slider.addEventListener("focusin", stopAuto);
+      slider.addEventListener("focusout", startAuto);
     });
 
     const overlay = document.getElementById("assoMediaOverlay");
