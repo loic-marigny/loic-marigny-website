@@ -73,7 +73,8 @@ a:hover {
   align-items: center;
   justify-content: center;
   position: relative;
-  max-width: 1250px;
+  max-width: none;
+  width: 100%;
   margin: 0 auto;
   padding: 1.25rem 0;
 }
@@ -83,8 +84,9 @@ a:hover {
   align-items: center;
   justify-content: center;
   flex: 1;
-  margin: 0 auto;
-  padding: 0.75rem 1rem;
+  margin: 0;
+  padding: 0.75rem 0;
+  width: 100%;
 }
 
 .nav-list {
@@ -295,9 +297,9 @@ a:hover {
 
 .brand-logo {
   position: absolute;
-  left: 0;
+  left: 20%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-100%, -50%);
 }
 
 .brand-logo img {
@@ -554,7 +556,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 4rem 2rem;
+  padding: 4rem 3rem;
   color: var(--white);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   position: relative;
@@ -563,8 +565,8 @@ footer {
 
 .bg-part--align-left,
 .bg-part--align-right {
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 
 
