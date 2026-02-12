@@ -133,7 +133,7 @@
   width: 100vw;
   margin-left: -50vw;
   margin-right: -50vw;
-  padding: 0;
+  padding: 0 0 12rem;
 }
 
 /* ===== Timeline verticale de rôles (ton code actuel, conservé) ===== */
