@@ -343,18 +343,8 @@ const marqueeItems = ammaMediaItems;
               bureau ouvert de l'association, un groupe de membres participant aux décisions de l'association avec le bureau
               et auxquels des tâches liées à la vie de l'association sont souvent confiées.<br/>
               Nous avons participé à plusieurs compétitions, notamment le Trophée des Orateurs et la Coupe de France de Débat.
-              Nous sommes rattachés à la <a class="asso-link" href="https://www.ffdeloquence.org/" target="_blank" rel="noopener noreferrer">Fédération Française de Débat et d'Eloquence.</a>
+              Nous sommes rattachés à la Fédération Française de Débat et d'Eloquence.
             </p>
-          </div>
-          <div class="asso-content asso-content--links">
-            <nav class="socials asso-links" aria-label="Liens La Joute de Vinci">
-              <a href="#" aria-label="LinkedIn">
-                <img src="/icons/linkedin-logo.svg" alt="LinkedIn" loading="lazy" />
-              </a>
-              <a href="#" aria-label="Instagram">
-                <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="Instagram" loading="lazy" />
-              </a>
-            </nav>
           </div>
         </div>
       </div>
@@ -374,7 +364,6 @@ const marqueeItems = ammaMediaItems;
         <div class="asso-side asso-side--roles">
           <div class="asso-heading">
             <h2>DaVinciBot</h2>
-            <img src="/assos/logo_dvb.png" alt="Logo DaVinciBot" class="asso-logo">
           </div>
           <ul class="roles-timeline">
             <li>
@@ -386,29 +375,7 @@ const marqueeItems = ammaMediaItems;
 
         <div class="asso-content-stack">
           <div class="asso-content">
-            <p>Lors de ma deuxième année à l’ESILV, j’ai intégré DaVinciBot pour participer au projet JASPER.
-              Ce projet visait à concevoir un robot humanoïde capable d’exécuter diverses tâches : l'imitation
-              de mouvements humains, levage et déplacement de charges (jusqu’à 5 kg), enchaînement de mouvements
-              programmés. Mes principales contributions étaient la conception technique du torse du robot (CAO et
-              dessin mécanique), benchmark et sélection des servomoteurs et drivers pour les bras, programmation
-              en langage C pour piloter et synchroniser les actionneurs.<br/>
-              J'y ai développé des compétences en travail en équipe transversale (mécanique, systèmes embarqués,
-              informatique), la collaboration inter-niveaux, de la 2ᵉ au 5ᵉ année, favorisant l’apprentissage et
-              le partage d’expertise, et j'ai vécu une véritable immersion dans la gestion d’un projet technique
-              complexe.</p>
-          </div>
-          <div class="asso-content asso-content--links">
-            <nav class="socials asso-links" aria-label="Liens DaVinciBot">
-              <a href="#" aria-label="Site web">
-                <img src="/logos/web.svg" alt="Site web" loading="lazy" />
-              </a>
-              <a href="#" aria-label="LinkedIn">
-                <img src="/icons/linkedin-logo.svg" alt="LinkedIn" loading="lazy" />
-              </a>
-              <a href="#" aria-label="Instagram">
-                <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="Instagram" loading="lazy" />
-              </a>
-            </nav>
+            <p>…</p>
           </div>
         </div>
       </div>
@@ -642,4 +609,3 @@ const marqueeItems = ammaMediaItems;
     }
   </script>
 </Layout>
-

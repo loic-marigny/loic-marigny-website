@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../layouts/Layout.astro';
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
@@ -6,6 +6,23 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Home — Loïc Marigny" description="Personal website, CV, blog & projects.">
-  <h1>Welcome</h1>
-  <p>This is my minimal home page. I will add sections later.</p>
+  <section class="home-hero">
+    <h1>Welcome</h1>
+    <p>This is my minimal home page. I will add sections later.</p>
+  </section>
 </Layout>
+
+<style>
+  .home-hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 3rem;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.45)),
+      url("/main/samarkand.jpg") center / cover no-repeat;
+  }
+</style>

@@ -212,6 +212,12 @@
   justify-content: flex-start;
 }
 
+.asso-link {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
 .asso-heading {
   width: 100%;
   max-width: 520px;
