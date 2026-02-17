@@ -17,6 +17,11 @@
   backdrop-filter: blur(8px);
 }
 
+.education-hero {
+  min-height: 90vh;
+  padding-bottom: 6rem;
+}
+
 
 /* ===============================
    Mise en page deux colonnes
