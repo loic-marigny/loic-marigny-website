@@ -30,7 +30,15 @@ const nav: NavItem[] = [
     ],
   },
   { href: "/blog", label: "Blog" },
-  { href: "/projects", label: "Projects" },
+  {
+    href: "/projects",
+    label: "Projects",
+    children: [
+      { href: "/projects/xmarkets", label: "xMarkets" },
+      { href: "/projects/xmarket-bots", label: "xMarket-bots" },
+      { href: "/projects/flow", label: "Flow" },
+    ],
+  },
   { href: "/interesting", label: "Interesting" },
 ];
 
