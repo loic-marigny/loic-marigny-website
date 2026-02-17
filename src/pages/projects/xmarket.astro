@@ -2,9 +2,9 @@
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout title="Projects - Flow" description="Project page for Flow.">
-  <header class="project-hero project-hero--flow">
-    <h1>Flow</h1>
+<Layout title="Projects - xMarket" description="Project page for xMarket.">
+  <header class="xmarket-hero">
+    <h1>xMarket</h1>
   </header>
   <section class="bg-part bg-part--with-hero">
     <h2>Contexte</h2>
@@ -17,7 +17,7 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <style>
-  .project-hero {
+  .xmarket-hero {
     position: relative;
     width: 100%;
     height: 50svh;
@@ -27,12 +27,8 @@ import Layout from "../../layouts/Layout.astro";
     padding: 0 3rem;
     background:
       linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
-      var(--project-hero-image) center / cover no-repeat;
+      url("/projets/xmarket-1.png") center / cover no-repeat;
     z-index: 1;
-  }
-
-  .project-hero--flow {
-    --project-hero-image: url("/projets/flow-1.png");
   }
 
   .bg-part--with-hero {
