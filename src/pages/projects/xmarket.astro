@@ -1,46 +1,35 @@
 ﻿---
 import Layout from "../../layouts/Layout.astro";
+import "../../styles/projects.css";
 ---
 
 <Layout title="Projects - xMarket" description="Project page for xMarket.">
-  <header class="xmarket-hero">
-    <h1>xMarket</h1>
+  <header class="project-hero project-hero--xmarket">
+    <h1><a href="https://loic-marigny.github.io/xMarket/">xMarket</a></h1>
   </header>
-  <section class="bg-part bg-part--with-hero">
+  <section class="bg-part bg-part--with-hero project-content">
     <h2>Contexte</h2>
-    <p>Project details coming soon.</p>
+    <p>J'ai complété ce projet lors de mon semestre à RTU ; il nous était demandé un projet permettant de monitorer
+      des datas et montrer des indicateurs aidant à la prise de décision pour montrer nos capacités en data science.
+      Le projet devait également pouvoir offrir une réelle valeur ajoutée à une entreprise. Il nous était proposé
+      d'utiliser des outils clé en main comme Grafana ou Power BI, mais j'ai préféré le faire en React pour avoir
+      le contrôle du début à la fin sur l'outil, ses fonctionnalités et les libraries graphiques utilisées.
+    </p>
     <h2>L'application</h2>
-    <p>Project details coming soon.</p>
+    <p><a href="https://loic-marigny.github.io/xMarket/">xMarket</a> vise à permettre à n'importe qui de comprendre le fonctionnement de la Bourse et des marchés financiers.
+      Chaque utilisateur.ice peut créer un compte gratuitement, sur lequel sont chargés 1 million de (mock) dollars US.
+      Iel peut ensuite les investir à sa guise, en suivant des stratégies ou non, et observer l'évolution de la valeur 
+      de son portfolio dans l'onglet dédié.<br/>
+      Iel peut également programmer des ordres si certaines valeurs sont atteintes.
+    </p>
+    <div class="project-gallery">
+      <img src="/projets/xmarket-1.png" alt="xMarket — visuel 1" loading="lazy" />
+      <img src="/projets/xmarket-2.png" alt="xMarket — visuel 2" loading="lazy" />
+      <img src="/projets/xmarket-3.png" alt="xMarket — visuel 3" loading="lazy" />
+    </div>
     <h2>Infrastructure & choix</h2>
-    <p>Project details coming soon.</p>
+    <p>Le projet a été réalisé en React, avec le back sur Supabase et Firebase. Les données utilisateurs sont stockées 
+      sur Firebase, et les données et historiques boursiers sont stockés sur Supabase.
+    </p>
   </section>
 </Layout>
-
-<style>
-  .xmarket-hero {
-    position: relative;
-    width: 100%;
-    height: 50svh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 3rem;
-    background:
-      linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
-      url("/projets/xmarket-1.png") center / cover no-repeat;
-    z-index: 1;
-  }
-
-  .bg-part--with-hero {
-    min-height: auto;
-    padding-top: 2.5rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  @media (min-width: 900px) {
-    .bg-part--with-hero {
-      padding-top: 3rem;
-    }
-  }
-</style>
